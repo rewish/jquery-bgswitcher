@@ -1,0 +1,147 @@
+<!DOCTYPE HTML>
+<html lang="ja">
+<head>
+	<meta charset="UTF-8">
+	<title>jQeury.bgSwitcher.js</title>
+	<script src="http://www.google.com/jsapi"></script>
+	<script>google.load("jquery", "1.4.2");</script>
+	<script src="../jquery.bgSwitcher.js"></script>
+<style type="text/css"> 
+body {
+	margin: 10px;
+	padding: 30px;
+}
+div.container {
+	padding: 0 30px;
+	overflow: hidden;
+	zoom: 1;
+}
+.bg {
+	width: 160px;
+	height: 160px;
+	margin: 0 0 40px;
+	padding: 20px;
+	background: url('./images/image1.gif') 5px 5px repeat;
+	line-height: 1.6;
+}
+#timer {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 50px;
+	padding: 5px 10px;
+	background-color: #CCC;
+	text-align: right;
+}
+h1 {
+	margin: 0 0 1em 50px;
+	font-size: 24px;
+}
+h2 {
+	margin: 1.5em 0 0.5em;
+	font-size: 16px;
+}
+ul.nav {
+	margin: 0 0 0.5em;
+	padding: 0 0 0 15px;
+	border-left: 1px solid #CCC;
+	overflow: hidden;
+	zoom: 1;
+}
+ul.nav li {
+	float: left;
+	margin: 0 15px 0 0;
+	padding: 0 15px 0 0;
+	border-right: 1px solid #CCC;
+	list-style: none;
+}
+p {
+	margin: 0 0 0.5em;
+}
+</style>
+</head>
+<body>
+<div class="container">
+
+	<h1>[デモ] jQuery.bgSwitcher</h1>
+	<p>全ての背景が2秒ごとに切り替ります。</p>
+
+	<h2>ノーマル</h2>
+	<p>以下のリンクでコントロールすることが出来る</p>
+	<ul class="nav">
+		<li><a href="javascript:void(0)" class="bgSwitch-normal-ctrl" data-method="start">Start</a></li>
+		<li><a href="javascript:void(0)" class="bgSwitch-normal-ctrl" data-method="stop">Stop</a></li>
+		<li><a href="javascript:void(0)" class="bgSwitch-normal-ctrl" data-method="toggle">Toggle</a></li>
+		<li><a href="javascript:void(0)" class="bgSwitch-normal-ctrl" data-method="reset">Reset</a></li>
+	</ul>
+	<div id="bgSwitch-normal" class="bg">
+		<p>テキストテキストテキストテキストテキストテキストテキストテキストテキストテキスト</p>
+	</div>
+
+	<h2>フェードアウト</h2>
+	<div id="bgSwitch-fadeOut" class="bg"> 
+		<p>テキストテキストテキストテキストテキストテキストテキストテキストテキストテキスト</p>
+	</div>
+
+	<h2>フェードアウト + ランダム</h2>
+	<div id="bgSwitch-random" class="bg"> 
+		<p>テキストテキストテキストテキストテキストテキストテキストテキストテキストテキスト</p>
+	</div>
+
+	<h2>インライン要素</h2>
+	<p>span要素に背景を指定。</p>
+	<p><span id="bgSwitch-inline">テキストテキスト</span></p>
+
+	<div id="timer">0秒</div>
+</div>
+<script>
+jQuery(function($) {
+
+	var time = 0, timer = $('#timer');
+	setInterval(function() {
+		timer.html(++time +'秒');
+	}, 1000);
+
+/*
+	$('body').bgSwitcher({
+		images: ['./images/image.gif', 1, 5],
+		interval: 2000,
+		fadeSpeed: 1000
+	}, true);
+*/
+
+	var bgSwitchNormal = $('#bgSwitch-normal').bgSwitcher({
+		images: ['./images/image.gif', 1, 5],
+		interval: 2000
+	}, true).data('bgSwitcher');
+
+	$('a.bgSwitch-normal-ctrl').each(function() {
+		var self = $(this), method = self.attr('data-method');
+		self.click(function() {
+			bgSwitchNormal[method]();
+		});
+	});
+
+	$('#bgSwitch-fadeOut').bgSwitcher({
+		images: ['./images/image.gif', 1, 5],
+		interval: 2000,
+		fadeSpeed: 1000
+	}, true);
+
+	$('#bgSwitch-random').bgSwitcher({
+		images: ['./images/image.gif', 1, 5],
+		interval: 2000,
+		fadeSpeed: 1000,
+		random: true
+	}, true);
+
+	$('#bgSwitch-inline').bgSwitcher({
+		images: ['./images/image.gif', 1, 5],
+		interval: 2000,
+		fadeSpeed: 1000
+	}, true);
+
+})
+</script>
+</body>
+</html>
