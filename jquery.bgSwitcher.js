@@ -22,8 +22,7 @@
 	$.bgSwitcher = function(node, config) {
 		this.node = $(node);
 		this.setConfig(config);
-		this.reset();
-		this.preload();
+		this.initialize();
 		if (this.config['autoStart']) {
 			this.start();
 		}
@@ -72,6 +71,14 @@
 			if (this.config['fadeSpeed']) {
 				this.initFadeNode();
 			}
+		},
+
+        initialize: function() {
+			this.index = 0;
+			this.node.css({
+				backgroundImage: 'url('+ this.config['images'][this.index] +')'
+			});
+			this.preload();
 		},
 
 		start: function() {
