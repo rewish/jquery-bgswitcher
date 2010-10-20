@@ -21,7 +21,7 @@ div.container {
 	height: 160px;
 	margin: 0 0 40px;
 	padding: 20px;
-	background: url('./images/image1.gif') 5px 5px repeat;
+	background: url('./images/image1.gif') 0 0 repeat;
 	line-height: 1.6;
 }
 #timer {
@@ -67,13 +67,6 @@ p {
 	<p>全ての背景が2秒ごとに切り替ります。</p>
 
 	<h2>ノーマル</h2>
-	<p>以下のリンクでコントロールすることが出来る</p>
-	<ul class="nav">
-		<li><a href="javascript:void(0)" class="bgSwitch-normal-ctrl" data-method="start">Start</a></li>
-		<li><a href="javascript:void(0)" class="bgSwitch-normal-ctrl" data-method="stop">Stop</a></li>
-		<li><a href="javascript:void(0)" class="bgSwitch-normal-ctrl" data-method="toggle">Toggle</a></li>
-		<li><a href="javascript:void(0)" class="bgSwitch-normal-ctrl" data-method="reset">Reset</a></li>
-	</ul>
 	<div id="bgSwitch-normal" class="bg">
 		<p>テキストテキストテキストテキストテキストテキストテキストテキストテキストテキスト</p>
 	</div>
@@ -110,17 +103,31 @@ jQuery(function($) {
 	}, true);
 */
 
-	var bgSwitchNormal = $('#bgSwitch-normal').bgSwitcher({
+	var methods = ['start', 'stop', 'toggle', 'reset'];
+	$('.bg, #bgSwitch-inline').each(function() {
+		var self = $(this),
+		    nav  = $('<ul>').addClass('nav');
+		$(methods).each(function(i, method) {
+			var ctrl = $('<a>', {
+				href: 'javascript:void(0)',
+				text: method,
+				click: function() {
+					var bs = self.data('bgSwitcher');
+					bs[method]();
+				}
+			});
+			nav.append($('<li>').append(ctrl));
+		});
+		if (this.tagName === 'SPAN') {
+			return self.parents('p').before(nav);
+		}
+		self.before(nav);
+	});
+
+	$('#bgSwitch-normal').bgSwitcher({
 		images: ['./images/image.gif', 1, 5],
 		interval: 2000
 	}, true).data('bgSwitcher');
-
-	$('a.bgSwitch-normal-ctrl').each(function() {
-		var self = $(this), method = self.attr('data-method');
-		self.click(function() {
-			bgSwitchNormal[method]();
-		});
-	});
 
 	$('#bgSwitch-fadeOut').bgSwitcher({
 		images: ['./images/image.gif', 1, 5],
