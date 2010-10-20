@@ -33,7 +33,7 @@
 			toggle : function() { self.toggle.apply(self, arguments) },
 			reset  : function() { self.reset.apply(self, arguments) }
 		};
-	}
+	};
 
 	$.bgSwitcher.prototype = {
 
@@ -49,7 +49,7 @@
 			}, config);
 
 			if (!(this.config['images'] instanceof Array)) {
-				throw new Error('Parameter is invalid.');
+				throw new Error('config["images"] is invalid.');
 			}
 
 			if (typeof this.config['images'][0] === 'string'
@@ -144,10 +144,11 @@
 		},
 
 		preload: function() {
+			this.loadedImages = [];
 			var len = this.config['images'].length;
 			for (var i = 0; i < len; ++i) {
-				var image = new Image;
-				image.src = this.config['images'][i];
+				this.loadedImages[i] = new Image;
+				this.loadedImages[i].src = this.config['images'][i];
 			}
 		},
 
@@ -266,4 +267,4 @@
 
 	};
 
-})(jQuery)
+})(jQuery);
