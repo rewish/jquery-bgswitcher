@@ -20,7 +20,7 @@ jQuery(function($) {
   // Stop
   ctrl.stop();
 
-  // Taggle
+  // Toggle
   ctrl.toggle();
 
   // Reset
