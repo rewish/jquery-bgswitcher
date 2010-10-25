@@ -5,7 +5,7 @@
  * @author     Hiroshi Hoaki <rewish.org@gmail.com>
  * @copyright  2010 Hiroshi Hoaki
  * @license    http://rewish.org/license/mit The MIT License
- * @link       http://rewish.org/javascript/jquery_bg_switcher
+ * @link       http://rewish.org/javascript/jquery_bgswitcher
  */
 (function($) {
 
