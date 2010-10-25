@@ -1,0 +1,29 @@
+Usage:
+jQuery(function($) {
+
+  /**
+   * Apply
+   */
+  $('body').bgSwitcher({		
+    images: ['/images/image.png', 1, 5] // image1.png, image2.png, ... image5.png
+  });
+
+  /**
+   * Control
+   */
+  // Get instance
+  var ctrl = $('body').data('bgSwitcher');
+
+  // Start
+  ctrl.start();
+
+  // Stop
+  ctrl.stop();
+
+  // Taggle
+  ctrl.toggle();
+
+  // Reset
+  ctrl.reset();
+
+});

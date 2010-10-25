@@ -42,7 +42,7 @@
 				images   : null,
 				interval : 5000,
 				autoStart: true,
-				fadeSpeed: 0,
+				fadeSpeed: 1000,
 				loop     : true,
 				random   : false,
 				callback : null
