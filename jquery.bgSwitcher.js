@@ -73,7 +73,7 @@
 			}
 		},
 
-        initialize: function() {
+		initialize: function() {
 			this.index = 0;
 			this.node.css({
 				backgroundImage: 'url('+ this.config['images'][this.index] +')'
@@ -204,13 +204,12 @@
 		},
 
 		initRootNode: function() {
-			var id = 'bgSwitcher-' + (+new Date);
+			var id = 'bgSwitcher-' + +new Date;
 
 			$('> *', this.node).not('script').wrapAll('<div id="'+ id +'">');
 
 			var rootNode = $('#' + id),
-			    bodyNode = this.node,
-			    _window  = $(window);
+			    bodyNode = this.node;
 
 			var styles = {
 				backgroundImage: bodyNode.css('backgroundImage'),
@@ -240,7 +239,7 @@
 			this.node = rootNode;
 
 			var self = this;
-			_window.bind('resize.bgSwitcher', function() {
+			$(window).bind('resize.bgSwitcher', function() {
 				self.resizeHandler();
 			});
 		},
