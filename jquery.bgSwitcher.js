@@ -160,6 +160,7 @@
 			}
 
 			if (tagName === 'body') {
+				
 				this.initRootNode();
 				tagName = 'div';
 			}
@@ -183,8 +184,8 @@
 				height: this.node.innerHeight(),
 				backgroundImage: this.node.css('backgroundImage'),
 				backgroundPosition: this.node.css('backgroundPosition') || [
-					bodyNode.css('backgroundPositionX'),
-					bodyNode.css('backgroundPositionY')
+					this.node.css('backgroundPositionX'),
+					this.node.css('backgroundPositionY')
 				].join(' '),
 				backgroundRepeat: this.node.css('backgroundRepeat'),
 				backgroundColor: this.node.css('backgroundColor'),
