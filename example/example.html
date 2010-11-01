@@ -70,6 +70,9 @@ ul.nav li {
 p {
 	margin: 0 0 0.5em;
 }
+#maxWidth .bg {
+	width: 100%;
+}
 </style>
 </head>
 <body>
@@ -105,6 +108,13 @@ p {
 			</div>
 		</li>
 	</ul>
+
+	<div id="maxWidth">
+		<h2>style=width:100%</h2>
+		<div class="bg">
+			<p>{resize: true}</p>
+		</div>
+	</div>
 
 	<div id="timer">0 sec</div>
 </div>
@@ -167,6 +177,11 @@ jQuery(function($) {
 		interval: 2000
 	}, true);
 
+	$('#maxWidth .bg').bgSwitcher({
+		images: ['./images/image.gif', 1, 5],
+		interval: 2000,
+		resize: true
+	});
 })
 </script>
 </body>

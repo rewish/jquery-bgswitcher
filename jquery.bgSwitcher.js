@@ -27,6 +27,11 @@
 			this.start();
 		}
 		var self = this;
+		if (this.config['resize']) {
+			$(window).bind('resize.bgSwitcher', function() {
+				self.resizeHandler();
+			});
+		}
 		return {
 			start  : function() { self.start.apply(self, arguments) },
 			stop   : function() { self.stop.apply(self, arguments) },
@@ -45,6 +50,7 @@
 				fadeSpeed: 1000,
 				loop     : true,
 				random   : false,
+				resize   : false,
 				callback : null
 			}, config);
 
