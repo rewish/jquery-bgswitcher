@@ -245,10 +245,8 @@
 
 			this.node = rootNode;
 
-			var self = this;
-			$(window).bind('resize.bgSwitcher', function() {
-				self.resizeHandler();
-			});
+			// Observe resize event
+			this.config['resize'] = true;
 		},
 
 		resizeHandler: function() {
