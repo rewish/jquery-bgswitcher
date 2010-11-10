@@ -14,7 +14,9 @@
 			try {
 				$(this).data('bgSwitcher', new $.bgSwitcher(this, config));
 			} catch(e) {
-				if (debug) alert(e);
+				if (debug) {
+					alert(e);
+				}
 			}
 		});
 	};
@@ -88,7 +90,9 @@
 		},
 
 		start: function() {
-			if (this.timeId) return;
+			if (this.timeId) {
+				return;
+			}
 			var self = this,
 			    imgs = this.config['images'],
 			    next = this[this.config['random'] ? 'random' : 'order'];
@@ -166,7 +170,6 @@
 			}
 
 			if (tagName === 'body') {
-				
 				this.initRootNode();
 				tagName = 'div';
 			}
