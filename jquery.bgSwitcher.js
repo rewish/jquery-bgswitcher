@@ -25,15 +25,6 @@
 		this.node = $(node);
 		this.setConfig(config);
 		this.initialize();
-		if (this.config['autoStart']) {
-			this.start();
-		}
-		var self = this;
-		if (this.config['resize']) {
-			$(window).bind('resize.bgSwitcher', function() {
-				self.resizeHandler();
-			});
-		}
 		return {
 			start  : function() { self.start.apply(self, arguments) },
 			stop   : function() { self.stop.apply(self, arguments) },
@@ -69,36 +60,43 @@
 			if (this.config['images'].length <= 1) {
 				throw new Error('Image must be at least more than two.');
 			}
-
-			if (!(this.config['callback'] instanceof Function)) {
-				this.config['callback'] = this.config['fadeSpeed']
-				                        ? this.fadeCallback
-				                        : this.normalCallback;
-			}
-
-			if (this.config['fadeSpeed']) {
-				this.initFadeNode();
-			}
 		},
 
 		initialize: function() {
-			this.index = 0;
-			this.node.css({
-				backgroundImage: 'url('+ this.config['images'][this.index] +')'
-			});
 			this.preload();
+
+			this.index = -1;
+			this.next  = this.config['random'] ? this.random : this.order;
+			this.next();
+			this.normalSwitch(this.config['images'][this.index]);
+
+			if (this.config['fadeSpeed'] > 0) {
+				this.initFadeNode();
+				this.doSwitch = this.fadeSwitch;
+			} else {
+				this.doSwitch = this.normalSwitch;
+			}
+
+			if (this.config['autoStart']) {
+				this.start();
+			}
+
+			var self = this;
+			if (this.config['resize']) {
+				$(window).bind('resize.bgSwitcher', function() {
+					self.resizeHandler();
+				});
+			}
 		},
 
 		start: function() {
 			if (this.timeId) {
 				return;
 			}
-			var self = this,
-			    imgs = this.config['images'],
-			    next = this[this.config['random'] ? 'random' : 'order'];
+			var self = this;
 			this.timeId = setInterval(function() {
-				next.call(self);
-				self.config['callback'].call(self, imgs[self.index]);
+				self.next();
+				self.doSwitch(self.config['images'][self.index]);
 			}, self.config['interval']);
 		},
 
@@ -120,7 +118,7 @@
 		reset: function() {
 			this.index = 0;
 			this.stop();
-			this.config['callback'].call(this, this.config['images'][this.index]);
+			this.doSwitch(this.config['images'][this.index]);
 			this.start();
 		},
 
@@ -258,11 +256,11 @@
 			this.fadeNode.width(width);
 		},
 
-		normalCallback: function(imageUrl) {
+		normalSwitch: function(imageUrl) {
 			this.node.css({backgroundImage: 'url('+ imageUrl +')'});
 		},
 
-		fadeCallback: function(imageUrl) {
+		fadeSwitch: function(imageUrl) {
 			var self = this;
 			this.fadeNode.stop(true, true).css({
 				backgroundImage: this.node.css('background-image')
