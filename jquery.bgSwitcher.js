@@ -1,7 +1,7 @@
 /**
  * jQuery.bgSwitcher
  *
- * @version    0.2.2-beta
+ * @version    0.2.3-beta
  * @author     Hiroshi Hoaki <rewish.org@gmail.com>
  * @copyright  2010 Hiroshi Hoaki
  * @license    http://rewish.org/license/mit The MIT License
@@ -43,8 +43,7 @@
 				fadeSpeed: 1000,
 				loop     : true,
 				random   : false,
-				resize   : false,
-				callback : null
+				resize   : false
 			}, config);
 
 			if (!(this.config['images'] instanceof Array)) {
