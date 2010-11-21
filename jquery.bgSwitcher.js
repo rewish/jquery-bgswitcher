@@ -25,12 +25,11 @@
 		this.node = $(node);
 		this.setConfig(config);
 		this.initialize();
-		var self = this;
 		return {
-			start : $.proxy(self.start,  self),
-			stop  : $.proxy(self.stop,   self),
-			toggle: $.proxy(self.toggle, self),
-			reset : $.proxy(self.reset,  self)
+			start : $.proxy(this.start,  this),
+			stop  : $.proxy(this.stop,   this),
+			toggle: $.proxy(this.toggle, this),
+			reset : $.proxy(this.reset,  this)
 		};
 	};
 
@@ -255,15 +254,15 @@
 		},
 
 		normalSwitch: function(imageUrl) {
-			this.node.css({backgroundImage: 'url('+ imageUrl +')'});
+			this.node.css('backgroundImage', 'url('+ imageUrl +')');
 		},
 
 		fadeSwitch: function(imageUrl) {
 			var self = this;
-			this.fadeNode.stop(true, true).css({
-				backgroundImage: this.node.css('background-image')
-			}).show(0, function() {
-				self.node.css({backgroundImage: 'url('+ imageUrl +')'});
+			this.fadeNode.stop(true, true);
+			this.fadeNode.css('backgroundImage', this.node.css('backgroundImage'));
+			this.fadeNode.show(0, function() {
+				self.node.css('backgroundImage', 'url('+ imageUrl +')');
 				self.fadeNode.fadeOut(self.config['fadeSpeed']);
 			});
 		}
