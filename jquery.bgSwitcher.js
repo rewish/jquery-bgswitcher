@@ -25,11 +25,12 @@
 		this.node = $(node);
 		this.setConfig(config);
 		this.initialize();
+		var self = this;
 		return {
-			start  : function() { self.start.apply(self, arguments) },
-			stop   : function() { self.stop.apply(self, arguments) },
-			toggle : function() { self.toggle.apply(self, arguments) },
-			reset  : function() { self.reset.apply(self, arguments) }
+			start : $.proxy(self.start,  self),
+			stop  : $.proxy(self.stop,   self),
+			toggle: $.proxy(self.toggle, self),
+			reset : $.proxy(self.reset,  self)
 		};
 	};
 
@@ -82,9 +83,7 @@
 
 			var self = this;
 			if (this.config['resize']) {
-				$(window).bind('resize.bgSwitcher', function() {
-					self.resizeHandler();
-				});
+				$(window).bind('resize.bgSwitcher', $.proxy(this.resizeHandler, this));
 			}
 		},
 
