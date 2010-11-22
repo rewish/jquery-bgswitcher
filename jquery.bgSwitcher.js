@@ -5,7 +5,7 @@
  * @author     Hiroshi Hoaki <rewish.org@gmail.com>
  * @copyright  2010 Hiroshi Hoaki
  * @license    http://rewish.org/license/mit The MIT License
- * @link       http://rewish.org/javascript/jquery_bgswitcher
+ * @link       http://rewish.org/javascript/jquery_bg_switcher
  */
 (function($) {
 
@@ -203,7 +203,7 @@
 			});
 
 			this.node = this.fadeNode.clone();
-			this.node.css({zIndex: zIndex - 2});
+			this.node.css('zIndex', zIndex - 2);
 
 			this.origNode.after(this.fadeNode, this.node);
 		},
