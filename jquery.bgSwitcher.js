@@ -120,11 +120,13 @@
 		},
 
 		order: function() {
-			if (++this.index === this.config['images'].length) {
+			var length = this.config['images'].length;
+			this.index++;
+			if (this.index === length) {
 				this.index = 0;
-				if (!this.config['loop']) {
-					this.stop();
-				}
+			}
+			if (!this.config['loop'] && this.index >= length - 1) {
+				this.stop();
 			}
 		},
 
