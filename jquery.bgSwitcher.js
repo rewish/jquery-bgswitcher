@@ -1,4 +1,4 @@
-/**
+/*!
  * jQuery.bgSwitcher
  *
  * @version    0.2.4-beta
@@ -80,7 +80,6 @@
 				this.start();
 			}
 
-			var self = this;
 			if (this.config['resize']) {
 				$(window).bind('resize.bgSwitcher', $.proxy(this.resizeHandler, this));
 			}
@@ -152,8 +151,7 @@
 
 		preload: function() {
 			this.loadedImages = [];
-			var len = this.config['images'].length;
-			for (var i = 0; i < len; ++i) {
+			for (var i = 0, len = this.config['images'].length; i < len; ++i) {
 				this.loadedImages[i] = new Image;
 				this.loadedImages[i].src = this.config['images'][i];
 			}
