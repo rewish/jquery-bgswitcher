@@ -7,21 +7,23 @@
  * @license    http://rewish.org/license/mit The MIT License
  * @link       http://rewish.org/javascript/jquery_bg_switcher
  */
-(function($, __DEBUG__) {
+(function($) {
 
-	$.fn.bgSwitcher = function(config) {
+	var __DEBUG__ = window.__DEBUG__ || /file:/.test(location.protocol);
+
+	$.fn.bgSwitcher = function(options) {
 		return this.each(function() {
 			try {
-				$(this).data('bgSwitcher', new $.bgSwitcher(this, config));
+				$(this).data('bgSwitcher', new $.bgSwitcher(this, options));
 			} catch(e) {
 				__DEBUG__ && alert(e);
 			}
 		});
 	};
 
-	$.bgSwitcher = function(node, config) {
+	$.bgSwitcher = function(node, options) {
 		this.node = $(node);
-		this.setConfig(config);
+		this.setOptions(options);
 		this.initialize();
 		return {
 			start : $.proxy(this.start,  this),
@@ -31,30 +33,32 @@
 		};
 	};
 
+	$.bgSwitcher.defaultOptions = {
+		images   : null,
+		interval : 5000,
+		autoStart: true,
+		fadeSpeed: 1000,
+		loop     : true,
+		random   : false,
+		resize   : false
+	};
+
 	$.bgSwitcher.prototype = {
 
-		setConfig: function(config) {
-			this.config = $.extend({
-				images   : null,
-				interval : 5000,
-				autoStart: true,
-				fadeSpeed: 1000,
-				loop     : true,
-				random   : false,
-				resize   : false
-			}, config);
+		setOptions: function(options) {
+			this.options = $.extend({}, $.bgSwitcher.defaultOptions, options);
 
-			if (!(this.config['images'] instanceof Array)) {
-				throw new Error('config["images"] is invalid.');
+			if (!(this.options['images'] instanceof Array)) {
+				throw new Error('options["images"] is invalid.');
 			}
 
-			if (typeof this.config['images'][0] === 'string'
-					&& typeof this.config['images'][1] === 'number'
-					&& typeof this.config['images'][2] === 'number') {
+			if (typeof this.options['images'][0] === 'string'
+					&& typeof this.options['images'][1] === 'number'
+					&& typeof this.options['images'][2] === 'number') {
 				this.sequence();
 			}
 
-			if (this.config['images'].length <= 1) {
+			if (this.options['images'].length <= 1) {
 				throw new Error('Image must be at least more than two.');
 			}
 		},
@@ -63,22 +67,22 @@
 			this.preload();
 
 			this.index = -1;
-			this.next  = this.config['random'] ? this.random : this.order;
+			this.next  = this.options['random'] ? this.random : this.order;
 			this.next();
-			this.normalSwitch(this.config['images'][this.index]);
+			this.normalSwitch(this.options['images'][this.index]);
 
-			if (this.config['fadeSpeed'] > 0) {
+			if (this.options['fadeSpeed'] > 0) {
 				this.initFadeNode();
 				this.doSwitch = this.fadeSwitch;
 			} else {
 				this.doSwitch = this.normalSwitch;
 			}
 
-			if (this.config['autoStart']) {
+			if (this.options['autoStart']) {
 				this.start();
 			}
 
-			if (this.config['resize']) {
+			if (this.options['resize']) {
 				$(window).bind('resize.bgSwitcher', $.proxy(this.resizeHandler, this));
 			}
 		},
@@ -90,8 +94,8 @@
 			var self = this;
 			this.timeId = setInterval(function() {
 				self.next();
-				self.doSwitch(self.config['images'][self.index]);
-			}, self.config['interval']);
+				self.doSwitch(self.options['images'][self.index]);
+			}, self.options['interval']);
 		},
 
 		stop: function() {
@@ -112,23 +116,23 @@
 		reset: function() {
 			this.index = 0;
 			this.stop();
-			this.doSwitch(this.config['images'][this.index]);
+			this.doSwitch(this.options['images'][this.index]);
 			this.start();
 		},
 
 		order: function() {
-			var length = this.config['images'].length;
-			this.index++;
+			var length = this.options['images'].length;
+			++this.index;
 			if (this.index === length) {
 				this.index = 0;
 			}
-			if (!this.config['loop'] && this.index >= length - 1) {
+			if (!this.options['loop'] && this.index >= length - 1) {
 				this.stop();
 			}
 		},
 
 		random: function() {
-			var length = this.config['images'].length,
+			var length = this.options['images'].length,
 			    index  = this.index;
 			while (this.index === index) {
 				index = Math.floor(Math.random() * length);
@@ -138,20 +142,20 @@
 
 		sequence: function() {
 			var tmp  = [],
-			    base = this.config['images'][0],
-			    min  = this.config['images'][1],
-			    max  = this.config['images'][2];
+			    base = this.options['images'][0],
+			    min  = this.options['images'][1],
+			    max  = this.options['images'][2];
 			for (i = min; i <= max; ++i) {
 				tmp.push(base.replace(/\.\w+$/, i + '$&'));
 			}
-			this.config['images'] = tmp;
+			this.options['images'] = tmp;
 		},
 
 		preload: function() {
 			this.loadedImages = [];
-			for (var i = 0, len = this.config['images'].length; i < len; ++i) {
+			for (var i = 0, len = this.options['images'].length; i < len; ++i) {
 				this.loadedImages[i] = new Image;
-				this.loadedImages[i].src = this.config['images'][i];
+				this.loadedImages[i].src = this.options['images'][i];
 			}
 		},
 
@@ -242,7 +246,7 @@
 			this.node = rootNode;
 
 			// Observe resize event
-			this.config['resize'] = true;
+			this.options['resize'] = true;
 		},
 
 		resizeHandler: function() {
@@ -261,10 +265,10 @@
 			this.fadeNode.css('backgroundImage', this.node.css('backgroundImage'));
 			this.fadeNode.show(0, function() {
 				self.node.css('backgroundImage', 'url('+ imageUrl +')');
-				self.fadeNode.fadeOut(self.config['fadeSpeed']);
+				self.fadeNode.fadeOut(self.options['fadeSpeed']);
 			});
 		}
 
 	};
 
-})(jQuery, __DEBUG__ || /file:/.test(location.protocol));
+})(jQuery);
