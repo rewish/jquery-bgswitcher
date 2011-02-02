@@ -10,7 +10,6 @@
 (function($) {
 
 	var __DEBUG__ = window.__DEBUG__ || /file:/.test(location.protocol);
-	var uniqueNumber = 0;
 
 	$.fn.bgSwitcher = function(options) {
 		return this.each(function() {
@@ -212,7 +211,7 @@
 		},
 
 		initRootNode: function() {
-			var id = 'bgSwitcher-' + (+new Date) + (++uniqueNumber);
+			var id = 'bgSwitcher-' + (+new Date);
 
 			$('> *', this.node).not('script').wrapAll('<div id="'+ id +'">');
 
