@@ -1,22 +1,20 @@
 /*!
  * jQuery.bgSwitcher
  *
- * @version    0.2.4-beta
+ * @version    0.2.5-beta
  * @author     Hiroshi Hoaki <rewish.org@gmail.com>
- * @copyright  2010 Hiroshi Hoaki
+ * @copyright  2010-2011 Hiroshi Hoaki
  * @license    http://rewish.org/license/mit The MIT License
  * @link       http://rewish.org/javascript/jquery_bg_switcher
  */
-(function($) {
+(function($, __DEBUG__) {
 
-	$.fn.bgSwitcher = function(config, debug) {
+	$.fn.bgSwitcher = function(config) {
 		return this.each(function() {
 			try {
 				$(this).data('bgSwitcher', new $.bgSwitcher(this, config));
 			} catch(e) {
-				if (debug) {
-					alert(e);
-				}
+				__DEBUG__ && alert(e);
 			}
 		});
 	};
@@ -269,4 +267,4 @@
 
 	};
 
-})(jQuery);
+})(jQuery, __DEBUG__ || /file:/.test(location.protocol));
