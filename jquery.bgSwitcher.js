@@ -145,9 +145,9 @@
 			    base = this.options['images'][0],
 			    min  = this.options['images'][1],
 			    max  = this.options['images'][2];
-			for (i = min; i <= max; ++i) {
-				tmp.push(base.replace(/\.\w+$/, i + '$&'));
-			}
+			do {
+				tmp.push(base.replace(/\.\w+$/, min + '$&'));
+			} while (++min <= max);
 			this.options['images'] = tmp;
 		},
 
