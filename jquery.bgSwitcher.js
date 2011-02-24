@@ -46,7 +46,7 @@
 	$.bgSwitcher.prototype = {
 
 		setOptions: function(options) {
-			this.options = $.extend({}, $.bgSwitcher.defaultOptions, options);
+			this.options = $.extend(true, $.bgSwitcher.defaultOptions, options);
 
 			if (!(this.options['images'] instanceof Array)) {
 				throw new Error('options["images"] is invalid.');
