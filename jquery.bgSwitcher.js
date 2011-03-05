@@ -48,17 +48,17 @@
 		setOptions: function(options) {
 			this.options = $.extend(true, $.bgSwitcher.defaultOptions, options);
 
-			if (!(this.options['images'] instanceof Array)) {
-				throw new Error('options["images"] is invalid.');
+			if (!(this.options.images instanceof Array)) {
+				throw new Error('options.images is invalid.');
 			}
 
-			if (typeof this.options['images'][0] === 'string'
-					&& typeof this.options['images'][1] === 'number'
-					&& typeof this.options['images'][2] === 'number') {
+			if (typeof this.options.images[0] === 'string'
+					&& typeof this.options.images[1] === 'number'
+					&& typeof this.options.images[2] === 'number') {
 				this.sequence();
 			}
 
-			if (this.options['images'].length <= 1) {
+			if (this.options.images.length <= 1) {
 				throw new Error('Image must be at least more than two.');
 			}
 		},
@@ -67,22 +67,22 @@
 			this.preload();
 
 			this.index = -1;
-			this.next  = this.options['random'] ? this.random : this.order;
+			this.next  = this.options.random ? this.random : this.order;
 			this.next();
-			this.normalSwitch(this.options['images'][this.index]);
+			this.normalSwitch(this.options.images[this.index]);
 
-			if (this.options['fadeSpeed'] > 0) {
+			if (this.options.fadeSpeed > 0) {
 				this.initFadeNode();
 				this.doSwitch = this.fadeSwitch;
 			} else {
 				this.doSwitch = this.normalSwitch;
 			}
 
-			if (this.options['autoStart']) {
+			if (this.options.autoStart) {
 				this.start();
 			}
 
-			if (this.options['resize']) {
+			if (this.options.resize) {
 				$(window).bind('resize.bgSwitcher', $.proxy(this.resizeHandler, this));
 			}
 		},
@@ -94,8 +94,8 @@
 			var self = this;
 			this.timeId = setInterval(function() {
 				self.next();
-				self.doSwitch(self.options['images'][self.index]);
-			}, self.options['interval']);
+				self.doSwitch(self.options.images[self.index]);
+			}, self.options.interval);
 		},
 
 		stop: function() {
@@ -116,23 +116,23 @@
 		reset: function() {
 			this.index = 0;
 			this.stop();
-			this.doSwitch(this.options['images'][this.index]);
+			this.doSwitch(this.options.images[this.index]);
 			this.start();
 		},
 
 		order: function() {
-			var length = this.options['images'].length;
+			var length = this.options.images.length;
 			++this.index;
 			if (this.index === length) {
 				this.index = 0;
 			}
-			if (!this.options['loop'] && this.index >= length - 1) {
+			if (!this.options.loop && this.index >= length - 1) {
 				this.stop();
 			}
 		},
 
 		random: function() {
-			var length = this.options['images'].length,
+			var length = this.options.images.length,
 			    index  = this.index;
 			while (this.index === index) {
 				index = Math.floor(Math.random() * length);
@@ -142,20 +142,20 @@
 
 		sequence: function() {
 			var tmp  = [],
-			    base = this.options['images'][0],
-			    min  = this.options['images'][1],
-			    max  = this.options['images'][2];
+			    base = this.options.images[0],
+			    min  = this.options.images[1],
+			    max  = this.options.images[2];
 			do {
 				tmp.push(base.replace(/\.\w+$/, min + '$&'));
 			} while (++min <= max);
-			this.options['images'] = tmp;
+			this.options.images = tmp;
 		},
 
 		preload: function() {
 			this.loadedImages = [];
-			for (var i = 0, len = this.options['images'].length; i < len; ++i) {
+			for (var i = 0, len = this.options.images.length; i < len; ++i) {
 				this.loadedImages[i] = new Image;
-				this.loadedImages[i].src = this.options['images'][i];
+				this.loadedImages[i].src = this.options.images[i];
 			}
 		},
 
@@ -181,7 +181,7 @@
 
 			this.fadeNode = $('<'+ tagName +'>');
 			this.fadeNode.css({
-				dispaly: 'block',
+				display: 'block',
 				position: 'absolute',
 				zIndex: zIndex - 1,
 				top: offset.top,
@@ -246,7 +246,7 @@
 			this.node = rootNode;
 
 			// Observe resize event
-			this.options['resize'] = true;
+			this.options.resize = true;
 		},
 
 		resizeHandler: function() {
@@ -265,7 +265,7 @@
 			this.fadeNode.css('backgroundImage', this.node.css('backgroundImage'));
 			this.fadeNode.show(0, function() {
 				self.node.css('backgroundImage', 'url('+ imageUrl +')');
-				self.fadeNode.fadeOut(self.options['fadeSpeed']);
+				self.fadeNode.fadeOut(self.options.fadeSpeed);
 			});
 		}
 
