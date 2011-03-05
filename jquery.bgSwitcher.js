@@ -9,15 +9,9 @@
  */
 (function($) {
 
-	var __DEBUG__ = window.__DEBUG__ || /file:/.test(location.protocol);
-
 	$.fn.bgSwitcher = function(options) {
 		return this.each(function() {
-			try {
-				$(this).data('bgSwitcher', new $.bgSwitcher(this, options));
-			} catch(e) {
-				__DEBUG__ && alert(e);
-			}
+			$(this).data('bgSwitcher', new $.bgSwitcher(this, options));
 		});
 	};
 
