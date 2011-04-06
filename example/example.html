@@ -90,7 +90,7 @@ p {
 		</li>
 
 		<li>
-			<h2>Fade out + Random</h2>
+			<h2>Slide up + Random</h2>
 			<div id="bgSwitch-random" class="bg">
 				<p>text text text text text text text text text text text text text text text text</p>
 			</div>
@@ -162,7 +162,10 @@ jQuery(function($) {
 	$('#bgSwitch-random').bgSwitcher({
 		images: ['./images/image.gif', 1, 5],
 		interval: 2000,
-		random: true
+		random: true,
+		switchHandler: function() {
+			this.node.slideUp(this.options.duration, this.options.easing);
+		}
 	});
 
 	$('#bgSwitch-inline').bgSwitcher({

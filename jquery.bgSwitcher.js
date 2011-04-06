@@ -1,13 +1,13 @@
 /*!
  * jQuery.bgSwitcher
  *
- * @version    0.2.7-beta
+ * @version    0.3.0-beta
  * @author     Hiroshi Hoaki <rewish.org@gmail.com>
  * @copyright  2010-2011 Hiroshi Hoaki
  * @license    http://rewish.org/license/mit The MIT License
  * @link       http://rewish.org/javascript/jquery_bg_switcher
  */
-(function($) {
+;(function($) {
 
 	$.fn.bgSwitcher = function(options) {
 		return this.each(function() {
@@ -25,10 +25,14 @@
 		images   : null,
 		interval : 5000,
 		autoStart: true,
-		fadeSpeed: 1000,
+		duration : 1000,
+		easing   : 'linear',
 		loop     : true,
 		random   : false,
-		resize   : false
+		resize   : false,
+		switchHandler: function() {
+			this.node.fadeOut(this.options.duration, this.options.easing);
+		}
 	};
 
 	$.bgSwitcher.prototype = {
@@ -49,6 +53,11 @@
 			if (this.options.images.length <= 1) {
 				throw new Error('Image must be at least more than two.');
 			}
+
+			// For backward compatibility
+			if (this.options.fadeSpeed != null) {
+				this.options.duration = this.options.fadeSpeed;
+			}
 		},
 
 		initialize: function() {
@@ -59,8 +68,8 @@
 			this.next();
 			this.normalSwitch(this.options.images[this.index]);
 
-			if (this.options.fadeSpeed > 0) {
-				this.initFadeNode();
+			if (this.options.duration > 0) {
+				this.initCloneNode();
 				this.doSwitch = this.fadeSwitch;
 			} else {
 				this.doSwitch = this.normalSwitch;
@@ -147,7 +156,7 @@
 			}
 		},
 
-		initFadeNode: function() {
+		initCloneNode: function() {
 			var tagName = this.node[0].tagName.toLowerCase();
 
 			if (tagName === 'html') {
@@ -167,11 +176,11 @@
 				this.node.css({zIndex: zIndex});
 			}
 
-			this.fadeNode = $('<'+ tagName +'>');
-			this.fadeNode.css({
+			this.cloneNode = $('<'+ tagName +'>');
+			this.cloneNode.css({
 				display: 'block',
 				position: 'absolute',
-				zIndex: zIndex - 1,
+				zIndex: zIndex - 2,
 				top: offset.top,
 				left: offset.left,
 				width: this.node.innerWidth(),
@@ -192,10 +201,10 @@
 				background: 'none'
 			});
 
-			this.node = this.fadeNode.clone();
-			this.node.css('zIndex', zIndex - 2);
+			this.node = this.cloneNode.clone();
+			this.node.css('zIndex', zIndex - 1);
 
-			this.origNode.after(this.fadeNode, this.node);
+			this.origNode.after(this.cloneNode, this.node);
 		},
 
 		initRootNode: function() {
@@ -240,7 +249,7 @@
 		resizeHandler: function() {
 			var width = this.origNode.innerWidth();
 			this.node.width(width);
-			this.fadeNode.width(width);
+			this.cloneNode.width(width);
 		},
 
 		normalSwitch: function(imageUrl) {
@@ -249,11 +258,11 @@
 
 		fadeSwitch: function(imageUrl) {
 			var self = this;
-			this.fadeNode.stop(true, true);
-			this.fadeNode.css('backgroundImage', this.node.css('backgroundImage'));
-			this.fadeNode.show(0, function() {
-				self.node.css('backgroundImage', 'url('+ imageUrl +')');
-				self.fadeNode.fadeOut(self.options.fadeSpeed);
+			this.node.stop(true, true);
+			this.node.css('backgroundImage', this.cloneNode.css('backgroundImage'));
+			this.node.show(0, function() {
+				self.cloneNode.css('backgroundImage', 'url('+ imageUrl +')');
+				self.options.switchHandler.call(self);
 			});
 		}
 
