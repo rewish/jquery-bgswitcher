@@ -83,7 +83,7 @@ p {
 
 	<ul>
 		<li>
-			<h2>Fade out</h2>
+			<h2>Fade out + not loop</h2>
 			<div id="bgSwitch-fadeOut" class="bg">
 				<p>text text text text text text text text text text text text text text text text</p>
 			</div>
@@ -97,7 +97,7 @@ p {
 		</li>
 
 		<li>
-			<h2>for inline elements</h2>
+			<h2>For inline elements</h2>
 			<p><span id="bgSwitch-inline">text text</span></p>
 		</li>
 
@@ -151,7 +151,7 @@ jQuery(function($) {
 		images: ['./images/image.gif', 1, 5],
 		interval: 2000,
 		fadeSpeed: 0
-	}).data('bgSwitcher');
+	});
 
 	$('#bgSwitch-fadeOut').bgSwitcher({
 		images: ['./images/image.gif', 1, 5],
