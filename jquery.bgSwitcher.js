@@ -29,7 +29,7 @@
 		easing   : 'linear',
 		loop     : true,
 		random   : false,
-		resize   : false,
+		resize   : true,
 		switchHandler: function() {
 			this.node.fadeOut(this.options.duration, this.options.easing);
 		}
