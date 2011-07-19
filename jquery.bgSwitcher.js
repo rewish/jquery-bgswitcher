@@ -149,10 +149,15 @@
 		},
 
 		preload: function() {
-			this.loadedImages = [];
-			for (var i = 0, len = this.options.images.length; i < len; ++i) {
-				this.loadedImages[i] = new Image;
-				this.loadedImages[i].src = this.options.images[i];
+			if (this.loadedImages != null) {
+				this.loadedImages = {};
+			}
+			var i = 0, images = this.optoins.images,
+			    length = images.length, path;
+			for (; i < length; ++i) {
+				path = images[i];
+				this.loadedImages[path] = new Image;
+				this.loadedImages[path].src = path;
 			}
 		},
 
