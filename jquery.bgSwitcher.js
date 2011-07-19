@@ -213,12 +213,11 @@
 		},
 
 		initRootNode: function() {
-			var id = 'bgSwitcher-' + (+new Date);
-
-			$('> *', this.node).not('script').wrapAll('<div id="'+ id +'">');
-
-			var rootNode = $('#' + id),
-			    bodyNode = this.node;
+			var rootNode, bodyNode;
+			rootNode = $('> *', this.node).not('script');
+			rootNode.find('script').remove();
+			rootNode = rootNode.wrapAll('<div>').parent();
+			bodyNode = this.node;
 
 			var styles = {
 				backgroundImage: bodyNode.css('backgroundImage'),
@@ -229,10 +228,12 @@
 				backgroundRepeat: bodyNode.css('backgroundRepeat'),
 				backgroundColor: bodyNode.css('backgroundColor'),
 				backgroundAttachment: bodyNode.css('backgroundAttachment')
-			};
-			var edge = ['Top', 'Bottom', 'Right', 'Left'];
-			for (var i = 0; i < 4; ++i) {
-				var property = 'padding' + edge[i];
+			},
+			edge = ['Top', 'Bottom', 'Right', 'Left'],
+
+			i = 0, property;
+			for (; i < 4; ++i) {
+				property = 'padding' + edge[i];
 				styles[property]  = +bodyNode.css('margin' + edge[i]).replace(/\D/g, '');
 				styles[property] += +bodyNode.css('padding' + edge[i]).replace(/\D/g, '');
 				styles[property] += 'px';
