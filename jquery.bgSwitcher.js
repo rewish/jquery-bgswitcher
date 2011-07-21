@@ -1,7 +1,7 @@
 /*!
  * jQuery.bgSwitcher
  *
- * @version    0.3.1-beta
+ * @version    0.3.2-beta
  * @author     Hiroshi Hoaki <rewish.org@gmail.com>
  * @copyright  2010-2011 Hiroshi Hoaki
  * @license    http://rewish.org/license/mit The MIT License
@@ -149,10 +149,10 @@
 		},
 
 		preload: function() {
-			if (this.loadedImages != null) {
+			if (this.loadedImages == null) {
 				this.loadedImages = {};
 			}
-			var i = 0, images = this.optoins.images,
+			var i = 0, images = this.options.images,
 			    length = images.length, path;
 			for (; i < length; ++i) {
 				path = images[i];
