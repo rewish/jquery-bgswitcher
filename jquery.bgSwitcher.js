@@ -78,10 +78,6 @@
 			if (this.options.autoStart) {
 				this.start();
 			}
-
-			if (this.options.resize) {
-				$(window).bind('resize.bgSwitcher', $.proxy(this.resizeHandler, this));
-			}
 		},
 
 		start: function() {
@@ -210,6 +206,11 @@
 			this.node.css('zIndex', zIndex - 1);
 
 			this.origNode.after(this.cloneNode, this.node);
+
+			// Observe window resize event
+			if (this.options.resize) {
+				$(window).bind('resize.bgSwitcher', $.proxy(this.resizeHandler, this));
+			}
 		},
 
 		initRootNode: function() {
