@@ -70,9 +70,6 @@ ul.nav li {
 p {
 	margin: 0 0 0.5em;
 }
-#maxWidth .bg {
-	width: 100%;
-}
 </style>
 </head>
 <body>
@@ -111,8 +108,15 @@ p {
 
 	<div id="maxWidth">
 		<h2>style=width:100%</h2>
-		<div class="bg">
-			<p>{resize: true}</p>
+		<div class="bg" style="width: 100%;">
+			<p>text text text text text text text text text text text text text text text text text text text</p>
+		</div>
+	</div>
+
+	<div id="marginAuto">
+		<h2>margin: auto</h2>
+		<div class="bg" style="width: 800px; margin: auto;">
+			<p> text text text text text text text text text text text text</p>
 		</div>
 	</div>
 
@@ -125,6 +129,9 @@ jQuery(function($) {
 	setInterval(function() {
 		timer.html(++time +' sec');
 	}, 1000);
+
+	$.bgSwitcher.defaultOptions.interval = 2000;
+	$.bgSwitcher.defaultOptions.images = ['./images/image.gif', 1, 5];
 
 	var methods = ['start', 'stop', 'toggle', 'reset'];
 	$('.bg, #bgSwitch-inline').each(function() {
@@ -148,36 +155,23 @@ jQuery(function($) {
 	});
 
 	$('#bgSwitch-normal').bgSwitcher({
-		images: ['./images/image.gif', 1, 5],
-		interval: 2000,
 		fadeSpeed: 0
 	});
 
 	$('#bgSwitch-fadeOut').bgSwitcher({
-		images: ['./images/image.gif', 1, 5],
-		interval: 2000,
 		loop: false
 	});
 
 	$('#bgSwitch-random').bgSwitcher({
-		images: ['./images/image.gif', 1, 5],
-		interval: 2000,
 		random: true,
 		switchHandler: function() {
 			this.node.slideUp(this.options.duration, this.options.easing);
 		}
 	});
 
-	$('#bgSwitch-inline').bgSwitcher({
-		images: ['./images/image.gif', 1, 5],
-		interval: 2000
-	});
-
-	$('#maxWidth .bg').bgSwitcher({
-		images: ['./images/image.gif', 1, 5],
-		interval: 2000,
-		resize: true
-	});
+	$('#bgSwitch-inline').bgSwitcher();
+	$('#maxWidth .bg').bgSwitcher();
+	$('#marginAuto .bg').bgSwitcher();
 })
 </script>
 </body>

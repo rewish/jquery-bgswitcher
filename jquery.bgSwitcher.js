@@ -254,9 +254,14 @@
 		},
 
 		resizeHandler: function() {
-			var width = this.origNode.innerWidth();
-			this.node.width(width);
-			this.cloneNode.width(width);
+			var offset = this.origNode.offset(),
+				css = {
+					width: this.origNode.innerWidth(),
+					top: offset.top,
+					left: offset.left
+				};
+			this.node.css(css);
+			this.cloneNode.css(css);
 		},
 
 		normalSwitch: function(imageUrl) {
