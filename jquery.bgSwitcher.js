@@ -16,9 +16,7 @@
 	};
 
 	$.bgSwitcher = function(node, options) {
-		this.node = $(node);
-		this.setOptions(options);
-		this.initialize();
+		this.initialize.apply(this, arguments);
 	};
 
 	$.bgSwitcher.defaultOptions = {
@@ -36,6 +34,29 @@
 	};
 
 	$.bgSwitcher.prototype = {
+
+		initialize: function(node, options) {
+			this.node = $(node);
+			this.setOptions(options);
+
+			this.preload();
+
+			this.index = -1;
+			this.next  = this.options.random ? this.random : this.order;
+			this.next();
+			this.normalSwitch(this.options.images[this.index]);
+
+			if (this.options.duration > 0) {
+				this.initCloneNode();
+				this.doSwitch = this.fadeSwitch;
+			} else {
+				this.doSwitch = this.normalSwitch;
+			}
+
+			if (this.options.autoStart) {
+				this.start();
+			}
+		},
 
 		setOptions: function(options) {
 			this.options = $.extend(true, {}, $.bgSwitcher.defaultOptions, options);
@@ -57,26 +78,6 @@
 			// For backward compatibility
 			if (this.options.fadeSpeed != null) {
 				this.options.duration = this.options.fadeSpeed;
-			}
-		},
-
-		initialize: function() {
-			this.preload();
-
-			this.index = -1;
-			this.next  = this.options.random ? this.random : this.order;
-			this.next();
-			this.normalSwitch(this.options.images[this.index]);
-
-			if (this.options.duration > 0) {
-				this.initCloneNode();
-				this.doSwitch = this.fadeSwitch;
-			} else {
-				this.doSwitch = this.normalSwitch;
-			}
-
-			if (this.options.autoStart) {
-				this.start();
 			}
 		},
 
@@ -214,13 +215,14 @@
 		},
 
 		initRootNode: function() {
-			var rootNode, bodyNode;
+			var rootNode, bodyNode, styles, edge, i, property;
+
 			rootNode = $('> *', this.node).not('script');
 			rootNode.find('script').remove();
 			rootNode = rootNode.wrapAll('<div>').parent();
 			bodyNode = this.node;
 
-			var styles = {
+			styles = {
 				backgroundImage: bodyNode.css('backgroundImage'),
 				backgroundPosition: bodyNode.css('backgroundPosition') || [
 					bodyNode.css('backgroundPositionX'),
@@ -229,11 +231,10 @@
 				backgroundRepeat: bodyNode.css('backgroundRepeat'),
 				backgroundColor: bodyNode.css('backgroundColor'),
 				backgroundAttachment: bodyNode.css('backgroundAttachment')
-			},
-			edge = ['Top', 'Bottom', 'Right', 'Left'],
+			};
 
-			i = 0, property;
-			for (; i < 4; ++i) {
+			edge = ['Top', 'Bottom', 'Right', 'Left'];
+			for (i = 0; i < 4; ++i) {
 				property = 'padding' + edge[i];
 				styles[property]  = +bodyNode.css('margin' + edge[i]).replace(/\D/g, '');
 				styles[property] += +bodyNode.css('padding' + edge[i]).replace(/\D/g, '');
