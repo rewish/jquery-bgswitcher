@@ -1,9 +1,9 @@
 /*!
  * jQuery.bgSwitcher
  *
- * @version    0.3.3-beta
+ * @version    0.3.4-beta
  * @author     Hiroshi Hoaki <rewish.org@gmail.com>
- * @copyright  2010-2011 Hiroshi Hoaki
+ * @copyright  2010-2012 Hiroshi Hoaki
  * @license    http://rewish.org/license/mit The MIT License
  * @link       http://rewish.org/javascript/jquery_bg_switcher
  */
@@ -178,6 +178,15 @@
 				this.node.css({zIndex: zIndex});
 			}
 
+			var backgroundPosition = [
+				this.node.css('backgroundPositionX'),
+				this.node.css('backgroundPositionY')
+			].join(' ');
+
+			if (backgroundPosition === ' ') {
+				backgroundPosition = this.node.css('backgroundPosition');
+			}
+
 			this.cloneNode = $('<'+ tagName +'>');
 			this.cloneNode.css({
 				display: 'block',
@@ -188,10 +197,7 @@
 				width: this.node.innerWidth(),
 				height: this.node.innerHeight(),
 				backgroundImage: this.node.css('backgroundImage'),
-				backgroundPosition: this.node.css('backgroundPosition') || [
-					this.node.css('backgroundPositionX'),
-					this.node.css('backgroundPositionY')
-				].join(' '),
+				backgroundPosition: backgroundPosition,
 				backgroundRepeat: this.node.css('backgroundRepeat'),
 				backgroundColor: this.node.css('backgroundColor'),
 				backgroundAttachment: this.node.css('backgroundAttachment')
