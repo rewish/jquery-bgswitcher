@@ -178,15 +178,6 @@
 				this.node.css({zIndex: zIndex});
 			}
 
-			var backgroundPosition = [
-				this.node.css('backgroundPositionX'),
-				this.node.css('backgroundPositionY')
-			].join(' ');
-
-			if (backgroundPosition === ' ') {
-				backgroundPosition = this.node.css('backgroundPosition');
-			}
-
 			this.cloneNode = $('<'+ tagName +'>');
 			this.cloneNode.css({
 				display: 'block',
@@ -197,7 +188,7 @@
 				width: this.node.innerWidth(),
 				height: this.node.innerHeight(),
 				backgroundImage: this.node.css('backgroundImage'),
-				backgroundPosition: backgroundPosition,
+				backgroundPosition: getSafeBackgroundPosition(this.node),
 				backgroundRepeat: this.node.css('backgroundRepeat'),
 				backgroundColor: this.node.css('backgroundColor'),
 				backgroundAttachment: this.node.css('backgroundAttachment')
@@ -230,10 +221,7 @@
 
 			styles = {
 				backgroundImage: bodyNode.css('backgroundImage'),
-				backgroundPosition: bodyNode.css('backgroundPosition') || [
-					bodyNode.css('backgroundPositionX'),
-					bodyNode.css('backgroundPositionY')
-				].join(' '),
+				backgroundPosition: getSafeBackgroundPosition(bodyNode),
 				backgroundRepeat: bodyNode.css('backgroundRepeat'),
 				backgroundColor: bodyNode.css('backgroundColor'),
 				backgroundAttachment: bodyNode.css('backgroundAttachment')
@@ -286,5 +274,27 @@
 		}
 
 	};
+
+	function getSafeBackgroundPosition($node) {
+		$node = $($node);
+
+		var posY,
+			i = 0,
+			propName = 'backgroundPosition',
+			ret = $node.css(propName);
+
+		if (ret !== '0% 0%') {
+			return ret;
+		}
+
+		ret = $node.css(propName + 'X').split(', ');
+		posY = $node.css(propName + 'Y').split(', ');
+
+		for (; i < ret.length; i++) {
+			ret[i] += ' ' + posY[i];
+		}
+
+		return ret.join(', ');
+	}
 
 })(jQuery);
