@@ -283,12 +283,17 @@
 			propName = 'backgroundPosition',
 			ret = $node.css(propName);
 
-		if (ret !== '0% 0%') {
+		if (ret !== undefined && ret !== '0% 0%') {
+			return ret;
+		}
+
+		posY = $node.css(propName + 'Y').split(', ');
+
+		if (posY === undefined) {
 			return ret;
 		}
 
 		ret = $node.css(propName + 'X').split(', ');
-		posY = $node.css(propName + 'Y').split(', ');
 
 		for (; i < ret.length; i++) {
 			ret[i] += ' ' + posY[i];
