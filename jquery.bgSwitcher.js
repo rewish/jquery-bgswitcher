@@ -1,7 +1,7 @@
 /*!
  * jQuery.bgSwitcher
  *
- * @version    0.3.5-beta
+ * @version    0.3.6-beta
  * @author     Hiroshi Hoaki <rewish.org@gmail.com>
  * @copyright  2010-2012 Hiroshi Hoaki
  * @license    http://rewish.org/license/mit The MIT License
