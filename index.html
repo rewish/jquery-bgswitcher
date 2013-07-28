@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<title>Demo - jQuery.BgSwitcher</title>
+	<meta name="viewport" content="initial-scale=1,width=720">
+	<link rel="stylesheet" href="style.css">
+	<script src="lib/jquery.js"></script>
+	<script src="jquery.bgswitcher.js"></script>
+
+	<script>
+		(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+			(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+				m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+		})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+		ga('create', 'UA-2534446-10', 'rewish.github.io');
+		ga('send', 'pageview');
+	</script>
+</head>
+<body>
+
+<div class="header">
+	<h1>Demo - jQuery.BgSwitcher</h1>
+	<p>Switch the background image with effects.</p>
+</div>
+
+<div class="section">
+	<h2>Config</h2>
+	<form id="bs-config-form" action="./" method="get">
+		<table>
+			<tbody>
+				<tr>
+					<th><label for="config-interval">Interval</label></th>
+					<td><input id="config-interval" name="interval" type="number" value="3000"></td>
+				</tr>
+				<tr>
+					<th>Start</th>
+					<td>
+						<input id="config-start-true" name="start" type="radio" value="true" checked="checked">
+						<label for="config-start-true">true</label>
+						<input id="config-start-false" name="start" type="radio" value="false">
+						<label for="config-start-false">false</label>
+					</td>
+				</tr>
+				<tr>
+					<th>Loop</th>
+					<td>
+						<input id="config-loop-true" name="loop" type="radio" value="true" checked="checked">
+						<label for="config-loop-true">true</label>
+						<input id="config-loop-false" name="loop" type="radio" value="false">
+						<label for="config-loop-false">false</label>
+					</td>
+				</tr>
+				<tr>
+					<th>Shuffle</th>
+					<td>
+						<input id="config-shuffle-true" name="shuffle" type="radio" value="true">
+						<label for="config-shuffle-true">true</label>
+						<input id="config-shuffle-false" name="shuffle" type="radio" value="false" checked="checked">
+						<label for="config-shuffle-false">false</label>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+		<table>
+			<tbody>
+				<tr>
+					<th><label for="config-effect">Effect</label></th>
+					<td>
+						<select id="config-effect" name="effect"></select>
+						<script>
+							!function($) {
+								html = '';
+								for (var type in $.BgSwitcher.switchHandlers) {
+									html += '<option value="' + type + '">' + type + '</option>';
+								}
+								$('#config-effect').html(html);
+							}(jQuery);
+						</script>
+					</td>
+				</tr>
+				<tr>
+					<th><label for="config-duration">Duration</label></th>
+					<td><input id="config-duration" name="duration" type="number" value="800"></td>
+				</tr>
+				<tr>
+					<th><label for="config-easing">Easing</label></th>
+					<td>
+						<select id="config-easing" name="easing">
+							<option value="swing">swing</option>
+							<option value="linear">linear</option>
+						</select>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</form>
+</div>
+
+<div class="section">
+	<h2>Demo</h2>
+	<ul class="actions">
+		<li><button data-action="start">Start switching</button></li>
+		<li><button data-action="stop">Stop switching</button></li>
+		<li><button data-action="toggle">Toggle start/stop</button></li>
+		<li><button data-action="reset">Reset</button></li>
+		<li><button data-action="next">Next image</button></li>
+		<li><button data-action="prev">Previous image</button></li>
+		<li><button data-action="destroy">Destroy</button></li>
+	</ul>
+	<div id="bs-demo"></div>
+	<script id="bs-template" type="text/x-template">
+		<div class="box">
+			<p>Lorem ipsum dolor sit amet, ea alii ornatus graecis sed, id reque aeque putent est. Ne albucius menandri sit, cu iudico accusamus sententiae sea, vix dicat mediocritatem eu. Ei nam nulla commune, graece urbanitas consequuntur cum eu. Usu idque argumentum ne.</p>
+			<p>Pro ei essent eirmod doctus, id pri sumo petentium temporibus. Pro semper erroribus referrentur te, mel in expetendis instructior. Dictas everti delectus eum ne, et pri adhuc legimus periculis, legendos laboramus forensibus pro ex. Mea ea ridens hendrerit, eam at vivendo denique conclusionemque.</p>
+		</div>
+	</script>
+</div>
+
+<div class="footer">
+	<p>You can read more information in the <a href="https://github.com/rewish/jquery-bgswitcher#readme">README</a>.</p>
+	<p class="copyright">&copy; 2009-2013 <a href="https://github.com/rewish">@rewish</a>.</p>
+	<a href="https://github.com/rewish/jquery-bgswitcher"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png" alt="Fork me on GitHub"></a>
+</div>
+
+<script>
+!function($) {
+	var $demo = $('#bs-demo'),
+		template = $('#bs-template').html();
+
+	$.BgSwitcher.defaultConfig.images = ['images/image_.jpg', 1, 5];
+
+	$form = $('#bs-config-form');
+	$form.on('submit', function(event) {
+		event.preventDefault();
+		applyToDemo();
+	});
+	$form.find('input,select').on('change', applyToDemo);
+
+	$('ul.actions').on('click', 'button', function(event) {
+		event.preventDefault();
+		$demo.find('.box').bgswitcher($(this).data('action'));
+	});
+
+	applyToDemo();
+
+	function applyToDemo() {
+		var config = {};
+
+		$.each($form.serializeArray(), function(i, param) {
+			if (param.value === 'true') {
+				param.value = true;
+			} else if (param.value === 'false') {
+				param.value = false;
+			} else if ($.isNumeric(param.value)) {
+				param.value = parseInt(param.value, 10);
+			}
+			config[param.name] = param.value;
+		});
+
+		$demo.find('.box').bgswitcher('destroy');
+		$demo.html(template);
+		$demo.find('.box').bgswitcher(config);
+	}
+}(jQuery);
+</script>
+
+</body>
+</html>
