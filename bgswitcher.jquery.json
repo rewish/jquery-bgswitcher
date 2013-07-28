@@ -1,0 +1,23 @@
+{
+  "name": "bgswitcher",
+  "version": "0.4",
+  "title": "jQuery.BgSwitcher",
+  "author": {
+    "name": "rewish",
+    "url": "https://github.com/rewish"
+  },
+  "licenses": [
+    {
+      "type": "MIT",
+      "url": "https://github.com/rewish/jquery-bgswitcher/LICENSE.md"
+    }
+  ],
+  "dependencies": {
+    "jquery": ">=1.7"
+  },
+  "description": "Switch the background image with effects.",
+  "keywords": ["image", "gallery"],
+  "docs": "https://github.com/rewish/jquery-bgswitcher#readme",
+  "demo": "http://rewish.github.io/jquery-bgswitcher/",
+  "bugs": "https://github.com/rewish/jquery-bgswitcher/issues"
+}
