@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="initial-scale=1">
+	<title>Test - jQuery.bgSwitcher</title>
+	<link rel="stylesheet" href="../lib/mocha/mocha.css">
+</head>
+<body>
+
+<div id="mocha"></div>
+<div id="sandbox"></div>
+
+<script src="../lib/jquery.js"></script>
+<script src="../lib/mocha/mocha.js"></script>
+<script src="../lib/expect/expect.js"></script>
+<script src="../lib/sinon/lib/sinon.js"></script>
+<script src="../lib/sinon/lib/sinon/match.js"></script>
+<script src="../lib/sinon/lib/sinon/spy.js"></script>
+<script src="../lib/sinon/lib/sinon/call.js"></script>
+<script src="../lib/sinon/lib/sinon/stub.js"></script>
+<script src="../lib/sinon/lib/sinon/mock.js"></script>
+<script src="../lib/sinon/lib/sinon/util/fake_timers.js"></script>
+<script src="../lib/sinon/lib/sinon/collection.js"></script>
+<script src="../lib/sinon/lib/sinon/sandbox.js"></script>
+<script src="../jquery.bgSwitcher.js"></script>
+
+<script>mocha.setup({ ui: 'bdd' });</script>
+
+<script src="bg_switcher_spec.js"></script>
+<script src="image_list_spec.js"></script>
+
+<script>
+if (window.mochaPhantomJS) {
+	mochaPhantomJS.run();
+} else {
+	mocha.run();
+}
+</script>
+</body>
+</html>
