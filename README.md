@@ -1,6 +1,8 @@
 jQuery.BgSwitcher
 =========================
 
+[![Build Status](https://travis-ci.org/rewish/jquery-bgswitcher.png?branch=master)](https://travis-ci.org/rewish/jquery-bgswitcher)
+
 Overview
 -------------------------
 
