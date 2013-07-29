@@ -1,4 +1,1 @@
-before_install:
-  - git submodule update --init --recursive
-
-script: phantomjs lib/mocha-phantomjs/lib/mocha-phantomjs.coffee spec/index.html
+script: phantomjs lib/mocha-phantomjs/lib/mocha-phantomjs.coffee test/index.html
