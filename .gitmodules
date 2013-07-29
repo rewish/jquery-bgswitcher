@@ -1,12 +1,12 @@
 [submodule "lib/mocha"]
 	path = lib/mocha
-	url = git@github.com:visionmedia/mocha.git
+	url = https://github.com/visionmedia/mocha.git
 [submodule "lib/expect"]
 	path = lib/expect
-	url = git@github.com:LearnBoost/expect.js.git
+	url = https://github.com/LearnBoost/expect.js.git
 [submodule "lib/mocha-phantomjs"]
 	path = lib/mocha-phantomjs
-	url = git@github.com:metaskills/mocha-phantomjs.git
+	url = https://github.com/metaskills/mocha-phantomjs.git
 [submodule "lib/sinon"]
 	path = lib/sinon
-	url = git@github.com:cjohansen/Sinon.JS.git
+	url = https://github.com/cjohansen/Sinon.JS.git
