@@ -1,12 +1,7 @@
-jQuery.BgSwitcher
+jQuery.BgSwitcher [![Build Status](https://travis-ci.org/rewish/jquery-bgswitcher.png?branch=master)](https://travis-ci.org/rewish/jquery-bgswitcher)
 =========================
 
-[![Build Status](https://travis-ci.org/rewish/jquery-bgswitcher.png?branch=master)](https://travis-ci.org/rewish/jquery-bgswitcher)
-
-Overview
--------------------------
-
-Switch the background image with effects.
+Switch the background-image with effects.
 
 Demo
 -------------------------
@@ -57,7 +52,7 @@ Effect Types
 
 ### Adding an effect types
 
-First, Adding a method to `switchHandlers`.
+First, Adding a method to `$.BgSwitcher.switchHandlers`.
 
 ```js
 $.BgSwitcher.switchHandlers.extraSlide = function($el) {
@@ -85,15 +80,15 @@ $(".box").bgswitcher("method name");
 
 You can call various methods, For example...
 
-| Name    | Description |
-| ------- | ----------- |
-| start   | Start the switching |
-| stop    | Stop the switching |
-| toggle  | Toggle between start/stop |
-| reset   | Return to the first switching |
-| next    | To the next switching |
-| prev    | To the previous switching |
-| destroy | !!Destroy BgSwitcher!! |
+Name    | Description
+------- | -----------------------------
+start   | Start the switching
+stop    | Stop the switching
+toggle  | Toggle between start/stop
+reset   | Return to the first switching
+next    | To the next switching
+prev    | To the previous switching
+destroy | !!Destroy BgSwitcher!!
 
 Dependencies
 -------------------------
