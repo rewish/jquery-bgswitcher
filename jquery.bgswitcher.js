@@ -6,7 +6,7 @@
  * @license  MIT License (https://github.com/rewish/jquery-bgswitcher/LICENSE.md)
  * @link     https://github.com/rewish/jquery-bgswitcher
  */
-!function($) {
+(function($) {
   'use strict';
 
   var loadedImages = {},
@@ -95,7 +95,10 @@
      */
     setImages: function(images) {
       this.imageList = new this.constructor.ImageList(images);
-      this.config && this.config.shuffle && this.imageList.shuffle();
+
+      if (this.config && this.config.shuffle) {
+        this.imageList.shuffle();
+      }
     },
 
     /**
@@ -121,7 +124,9 @@
      * Adjust rectangle
      */
     adjustRectangle: function() {
-      var edge, i = 0,
+      var edge,
+          i = 0,
+          length = edges.length,
           offset = this.$el.position(),
           copiedStyles = {
             top: offset.top,
@@ -130,7 +135,8 @@
             height: this.$el.innerHeight()
           };
 
-      while (edge = edges[i++]) {
+      for (; i < length; i++) {
+        edge = edges[i];
         copiedStyles['margin' + edge] = this.$el.css('margin' + edge);
         copiedStyles['border' + edge] = this.$el.css('border' + edge);
       }
@@ -213,16 +219,24 @@
      */
     switching: function() {
       var started = !!this._timerID;
-      started && this.stop();
 
-      this.$clone && this.$clone.remove();
+      if (started) {
+        this.stop();
+      }
+
+      if (this.$clone) {
+        this.$clone.remove();
+      }
+
       this.$clone = this.$bg.clone();
       this.$clone.css({top: 0, left: 0, border: 'none'});
       this.$bg.append(this.$clone);
       this._prepareSwitching();
       this.switchHandler(this.$clone);
 
-      started && this.start();
+      if (started) {
+        this.start();
+      }
     },
 
     /**
@@ -255,7 +269,10 @@
       this.setImages(this.config.images);
       this.setSwitchHandler(this.getBuiltInSwitchHandler());
       this._prepareSwitching();
-      this.config.start && this.start();
+
+      if (this.config.start) {
+        this.start();
+      }
     },
 
     /**
@@ -265,7 +282,7 @@
       this.$bg = $(document.createElement('div'));
       this.$bg.css({
         position: 'absolute',
-        zIndex: (this.$el.css('zIndex')|0) - 1,
+        zIndex: (parseInt(this.$el.css('zIndex'), 10) || 0) - 1,
         overflow: 'hidden'
       });
 
@@ -286,10 +303,11 @@
     _copyBackgroundStyles: function () {
       var prop,
           copiedStyle = {},
+          length = backgroundProperties.length,
           i = 0;
 
-      while (prop = backgroundProperties[i++]) {
-        prop = 'background' + prop;
+      for (; i < length; i++) {
+        prop = 'background' + backgroundProperties[i];
         copiedStyle[prop] = this.$el.css(prop);
       }
 
@@ -430,9 +448,12 @@
      * Preload an images
      */
     preload: function() {
-      var path, i = 0;
+      var path,
+          length = this.images.length,
+          i = 0;
 
-      while (path = this.images[i++]) {
+      for (; i < length; i++) {
+        path = this.images[i];
         if (!loadedImages[path]) {
           loadedImages[path] = new Image();
           loadedImages[path].src = path;
@@ -495,4 +516,4 @@
   });
 
   $.BgSwitcher = BgSwitcher;
-}(jQuery);
+}(jQuery));
