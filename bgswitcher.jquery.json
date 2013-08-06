@@ -16,7 +16,7 @@
   "dependencies": {
     "jquery": ">=1.7"
   },
-  "description": "Switch the background image with effects.",
+  "description": "Switch the background image with using effect.",
   "keywords": ["image", "gallery"],
   "docs": "https://github.com/rewish/jquery-bgswitcher#readme",
   "demo": "http://rewish.github.io/jquery-bgswitcher/",

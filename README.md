@@ -1,7 +1,7 @@
 jQuery.BgSwitcher [![Build Status](https://travis-ci.org/rewish/jquery-bgswitcher.png?branch=master)](https://travis-ci.org/rewish/jquery-bgswitcher)
 =========================
 
-Switch the background-image with effects.
+Switch the background image with using effect.
 
 Demo
 -------------------------
