@@ -96,7 +96,7 @@
     setImages: function(images) {
       this.imageList = new this.constructor.ImageList(images);
 
-      if (this.config && this.config.shuffle) {
+      if (this.config.shuffle) {
         this.imageList.shuffle();
       }
     },
