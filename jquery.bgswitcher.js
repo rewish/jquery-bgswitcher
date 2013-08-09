@@ -62,14 +62,14 @@
      */
     dispatch: function(one) {
       switch (toString.call(one)) {
-        case '[object String]':
-          this[one].apply(this, slice.call(arguments, 1));
-          break;
         case '[object Object]':
           this.setConfig(one);
           break;
+        case '[object String]':
+          this[one].apply(this, slice.call(arguments, 1));
+          break;
         default:
-          this.setConfig();
+          throw new Error('Please specify a Object or String');
       }
     },
 

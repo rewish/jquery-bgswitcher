@@ -61,11 +61,10 @@ describe('jQuery.BgSwitcher', function() {
     });
 
     context('when call with unknown type', function() {
-      it('should be call #setConfig', function() {
-        bs.setConfig = sinon.spy();
-        bs.dispatch(true);
-        expect(bs.setConfig.calledOnce).to.be.ok();
-        expect(bs.setConfig.calledWith()).to.be.ok();
+      it('should be throw error', function() {
+        expect(bs.dispatch).to.throwException();
+        expect(bs.dispatch).withArgs(undefined).to.throwException();
+        expect(bs.dispatch).withArgs(function(){}).to.throwException();
       });
     });
   });
