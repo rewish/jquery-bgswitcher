@@ -256,11 +256,11 @@ describe('jQuery.BgSwitcher', function() {
       bs.setConfig({interval: INTERVAL});
     });
 
-    it('call switchHandler with $clone', function() {
+    it('call switchHandler with $switchable', function() {
       bs.switchHandler = sinon.spy();
       bs.switching();
       expect(bs.switchHandler.calledOnce).to.be.ok();
-      expect(bs.switchHandler.calledWith(bs.$clone)).to.be.ok();
+      expect(bs.switchHandler.calledWith(bs.$switchable)).to.be.ok();
     });
 
     context('when starting the timer', function() {

@@ -224,15 +224,9 @@
         this.stop();
       }
 
-      if (this.$clone) {
-        this.$clone.remove();
-      }
-
-      this.$clone = this.$bg.clone();
-      this.$clone.css({top: 0, left: 0, border: 'none'});
-      this.$bg.append(this.$clone);
+      this._createSwitchableElement();
       this._prepareSwitching();
-      this.switchHandler(this.$clone);
+      this.switchHandler(this.$switchable);
 
       if (started) {
         this.start();
@@ -246,10 +240,10 @@
       this.stop();
       this._stopListeningToResize();
 
-      if (this.$clone) {
-        this.$clone.stop();
-        this.$clone.remove();
-        this.$clone = null;
+      if (this.$switchable) {
+        this.$switchable.stop();
+        this.$switchable.remove();
+        this.$switchable = null;
       }
 
       if (this.$bg) {
@@ -295,6 +289,19 @@
         this.$el.before(this.$bg);
         this.$el.css('background', 'none');
       }
+    },
+
+    /**
+     * Create switchable element
+     */
+    _createSwitchableElement: function() {
+      if (this.$switchable) {
+        this.$switchable.remove();
+      }
+
+      this.$switchable = this.$bg.clone();
+      this.$switchable.css({top: 0, left: 0, margin: 0, border: 'none'});
+      this.$switchable.appendTo(this.$bg);
     },
 
     /**
