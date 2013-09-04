@@ -408,6 +408,16 @@
   };
 
   /**
+   * Define effect
+   *
+   * @param {String} name
+   * @param {Function} fn
+   */
+  BgSwitcher.defineEffect = function(name, fn) {
+    this.switchHandlers[name] = fn;
+  };
+
+  /**
    * BgSwitcher.ImageList
    *
    * @param {Array} images

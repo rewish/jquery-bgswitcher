@@ -323,4 +323,12 @@ describe('jQuery.BgSwitcher', function() {
       });
     });
   });
+
+  describe('defineEffect', function() {
+    it('should be set a function', function() {
+      var fn = function() {};
+      $.BgSwitcher.defineEffect('foo', fn);
+      expect($.BgSwitcher.switchHandlers.foo).to.be(fn);
+    });
+  });
 });
