@@ -31,9 +31,9 @@ Config
 | -------- | ------- | ------- | ------------|
 | images   | Array   | []      | Background images |
 | interval | number  | 5000    | Interval of switching |
-| start    | boolean | true    | Start the switching at call `$.fn.bgswitcher(config)` ([Calling the Methods](#calling-the-methods)) |
-| loop     | boolean | true    | Loop the switching |
-| shuffle  | boolean | false   | Shuffle the order of an images |
+| start    | boolean | true    | Start switching on after initialization ([Calling the Methods](#calling-the-methods)) |
+| loop     | boolean | true    | Looping the switch |
+| shuffle  | boolean | false   | Shuffling the images order |
 | effect   | string  | fade    | Effect type ([Built-In effect types](#built-in-effect-types)) |
 | duration | number  | 1000    | Effect duration |
 | easing   | string  | swing   | Effect easing |
@@ -52,15 +52,15 @@ Effect Types
 
 ### Adding an effect types
 
-First, Adding a method to `$.BgSwitcher.switchHandlers`.
+First, define effect with using the `$.BgSwitcher.defineEffect()`.
 
 ```js
-$.BgSwitcher.switchHandlers.extraSlide = function($el) {
+$.BgSwitcher.defineEffect('extraSlide', function($el) {
   $el.animate({right: -$el.width()}, this.config.duration, this.config.easing);
-};
+});
 ```
 
-Then, Specify the method name that you added.
+Then, specify the effect name that you added.
 
 ```js
 $(".box").bgswitcher({
@@ -86,8 +86,8 @@ start   | Start the switching
 stop    | Stop the switching
 toggle  | Toggle between start/stop
 reset   | Return to the first switching
-next    | To the next switching
-prev    | To the previous switching
+next    | Go to the next switching
+prev    | Go to the previous switching
 destroy | !!Destroy BgSwitcher!!
 
 Dependencies

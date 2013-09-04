@@ -256,11 +256,11 @@ describe('jQuery.BgSwitcher', function() {
       bs.setConfig({interval: INTERVAL});
     });
 
-    it('call switchHandler with $clone', function() {
+    it('call switchHandler with $switchable', function() {
       bs.switchHandler = sinon.spy();
       bs.switching();
       expect(bs.switchHandler.calledOnce).to.be.ok();
-      expect(bs.switchHandler.calledWith(bs.$clone)).to.be.ok();
+      expect(bs.switchHandler.calledWith(bs.$switchable)).to.be.ok();
     });
 
     context('when starting the timer', function() {
@@ -321,6 +321,14 @@ describe('jQuery.BgSwitcher', function() {
         bs._prepare();
         expect(bs.start.calledOnce).to.not.be.ok();
       });
+    });
+  });
+
+  describe('defineEffect', function() {
+    it('should be set a function', function() {
+      var fn = function() {};
+      $.BgSwitcher.defineEffect('foo', fn);
+      expect($.BgSwitcher.switchHandlers.foo).to.be(fn);
     });
   });
 });
