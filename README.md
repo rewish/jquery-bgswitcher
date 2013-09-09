@@ -123,4 +123,4 @@ phantomjs lib/mocha-phantomjs/lib/mocha-phantomjs.coffee spec/index.html
 License
 -------------------------
 
-The [MIT License](https://github.com/rewish/jquery-bgswitcher/README.md), Copyright (c) 2009-2013 [@rewish](https://github.com/rewish).
+The [MIT License](https://github.com/rewish/jquery-bgswitcher/blob/master/LICENSE.md), Copyright (c) 2009-2013 [@rewish](https://github.com/rewish).
