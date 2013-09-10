@@ -24,16 +24,25 @@ $(".box").bgswitcher({
 });
 ```
 
-Config
+For example, if you want to disable the loop of switching:
+
+```js
+$(".box").bgswitcher({
+  images: ["pic1.jpg", "pic2.jpg", "pic3.jpg"],
+  loop: false
+});
+```
+
+Configs
 -------------------------
 
 | Key      | Type    | Default | Description |
 | -------- | ------- | ------- | ------------|
-| images   | Array   | []      | Background images |
+| images   | array   | []      | Background images |
 | interval | number  | 5000    | Interval of switching |
-| start    | boolean | true    | Start switching on after initialization ([Calling the Methods](#calling-the-methods)) |
-| loop     | boolean | true    | Looping the switch |
-| shuffle  | boolean | false   | Shuffling the images order |
+| start    | boolean | true    | Start the switch on after initialization ([Calling the Methods](#calling-the-methods)) |
+| loop     | boolean | true    | Loop the switch |
+| shuffle  | boolean | false   | Shuffle the image order |
 | effect   | string  | fade    | Effect type ([Built-In effect types](#built-in-effect-types)) |
 | duration | number  | 1000    | Effect duration |
 | easing   | string  | swing   | Effect easing |
@@ -50,12 +59,12 @@ Effect Types
 * drop
 * hide (No effect)
 
-### Adding an effect types
+### Adding the effect type
 
 First, define effect with using the `$.BgSwitcher.defineEffect()`.
 
 ```js
-$.BgSwitcher.defineEffect('extraSlide', function($el) {
+$.BgSwitcher.defineEffect("extraSlide", function($el) {
   $el.animate({right: -$el.width()}, this.config.duration, this.config.easing);
 });
 ```
@@ -78,7 +87,7 @@ Support the method calls like jQuery UI Widget.
 $(".box").bgswitcher("method name");
 ```
 
-You can call various methods, For example...
+You can call various methods, For example:
 
 Name    | Description
 ------- | -----------------------------
@@ -105,7 +114,7 @@ Support browsers
 Running the Tests
 -------------------------
 
-Setup a modules required for testing.
+Setup the modules required for testing.
 
 ```sh
 git submodule update --init --recursive
@@ -113,11 +122,11 @@ git submodule update --init --recursive
 
 You can testing in two ways:
 
-* Open the `spec/index.html` in the Web browser
+* Open the `test/index.html` in the Web browser
 * Command Line Testing with the PhantomJS
 
 ```sh
-phantomjs lib/mocha-phantomjs/lib/mocha-phantomjs.coffee spec/index.html
+phantomjs lib/mocha-phantomjs/lib/mocha-phantomjs.coffee test/index.html
 ```
 
 License
