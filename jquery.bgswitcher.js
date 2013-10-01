@@ -215,6 +215,20 @@
     },
 
     /**
+     * Select the switching at index
+     *
+     * @param {number} index
+     */
+    select: function(index) {
+      if (index === -1) {
+        index = this.imageList.count() - 1;
+      }
+
+      this.index = index;
+      this.switching();
+    },
+
+    /**
      * Switching the background image
      */
     switching: function() {
