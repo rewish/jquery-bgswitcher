@@ -95,9 +95,22 @@ start   | Start the switching
 stop    | Stop the switching
 toggle  | Toggle between start/stop
 reset   | Return to the first switching
+select  | Select the switching at index
 next    | Go to the next switching
 prev    | Go to the previous switching
 destroy | !!Destroy BgSwitcher!!
+
+Example for `select` with button:
+
+```js
+var $el = $(".box").bgswitcher({
+  images: ["foo.jpg", "bar.jpg", "baz.jpg"]
+});
+
+$("button").on("click", function() {
+  $el.bgswitcher("select", 1); // bar.jpg
+});
+```
 
 Dependencies
 -------------------------
