@@ -1,7 +1,7 @@
 /*!
  * jQuery.BgSwitcher
  *
- * @version  0.4.1
+ * @version  0.4.2
  * @author   rewish <rewish.org@gmail.com>
  * @license  MIT License (https://github.com/rewish/jquery-bgswitcher/blob/master/LICENSE.md)
  * @link     https://github.com/rewish/jquery-bgswitcher
@@ -211,6 +211,20 @@
         this.index = this.imageList.count() - 1;
       }
 
+      this.switching();
+    },
+
+    /**
+     * Select the switching at index
+     *
+     * @param {number} index
+     */
+    select: function(index) {
+      if (index === -1) {
+        index = this.imageList.count() - 1;
+      }
+
+      this.index = index;
       this.switching();
     },
 

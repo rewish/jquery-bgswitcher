@@ -251,6 +251,26 @@ describe('jQuery.BgSwitcher', function() {
     });
   });
 
+  describe('#select', function() {
+    beforeEach(function() {
+      bs.setConfig({images: ['foo', 'bar', 'baz']});
+    });
+
+    it('select switching at index', function() {
+      bs.select(0);
+      expect(bs.$bg.css('backgroundImage').split('/').pop()).to.have.contain('foo');
+      bs.select(1);
+      expect(bs.$bg.css('backgroundImage').split('/').pop()).to.have.contain('bar');
+    });
+
+    context('when the index is -1', function() {
+      it('select the last switching', function() {
+        bs.select(-1);
+        expect(bs.$bg.css('backgroundImage').split('/').pop()).to.have.contain('baz');
+      });
+    });
+  });
+
   describe('#switching', function() {
     beforeEach(function() {
       bs.setConfig({interval: INTERVAL});
