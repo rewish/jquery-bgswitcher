@@ -85,7 +85,7 @@
         this.config.shuffle = this.config.random;
       }
 
-      this._prepare();
+      this.refresh();
     },
 
     /**
@@ -121,27 +121,16 @@
     },
 
     /**
-     * Adjust rectangle
+     * Refresh
      */
-    adjustRectangle: function() {
-      var corner,
-          i = 0,
-          length = corners.length,
-          offset = this.$el.position(),
-          copiedStyles = {
-            top: offset.top,
-            left: offset.left,
-            width: this.$el.innerWidth(),
-            height: this.$el.innerHeight()
-          };
+    refresh: function() {
+      this.setImages(this.config.images);
+      this.setSwitchHandler(this.getBuiltInSwitchHandler());
+      this._prepareSwitching();
 
-      for (; i < length; i++) {
-        corner = corners[i];
-        copiedStyles['margin' + corner] = this.$el.css('margin' + corner);
-        copiedStyles['border' + corner] = this.$el.css('border' + corner);
+      if (this.config.start) {
+        this.start();
       }
-
-      this.$bg.css(copiedStyles);
     },
 
     /**
@@ -271,16 +260,27 @@
     },
 
     /**
-     * Prepare
+     * Adjust rectangle
      */
-    _prepare: function() {
-      this.setImages(this.config.images);
-      this.setSwitchHandler(this.getBuiltInSwitchHandler());
-      this._prepareSwitching();
+    _adjustRectangle: function() {
+      var corner,
+          i = 0,
+          length = corners.length,
+          offset = this.$el.position(),
+          copiedStyles = {
+            top: offset.top,
+            left: offset.left,
+            width: this.$el.innerWidth(),
+            height: this.$el.innerHeight()
+          };
 
-      if (this.config.start) {
-        this.start();
+      for (; i < length; i++) {
+        corner = corners[i];
+        copiedStyles['margin' + corner] = this.$el.css('margin' + corner);
+        copiedStyles['border' + corner] = this.$el.css('border' + corner);
       }
+
+      this.$bg.css(copiedStyles);
     },
 
     /**
@@ -295,7 +295,7 @@
       });
 
       this._copyBackgroundStyles();
-      this.adjustRectangle();
+      this._adjustRectangle();
 
       if (this.$el[0].tagName === 'BODY') {
         this.$el.prepend(this.$bg);
@@ -341,7 +341,7 @@
     _listenToResize: function() {
       var that = this;
       this._resizeHandler = function() {
-        that.adjustRectangle();
+        that._adjustRectangle();
       };
       $(window).on('resize', this._resizeHandler);
     },
@@ -355,7 +355,7 @@
     },
 
     /**
-     * Prepare to switching the background image
+     * Prepare the Switching
      */
     _prepareSwitching: function() {
       this.$bg.css('backgroundImage', this.imageList.url(this.index));
