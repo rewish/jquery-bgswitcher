@@ -14,7 +14,7 @@
       slice = Array.prototype.slice,
       toString = Object.prototype.toString,
 
-      edges = ['Top', 'Right', 'Bottom', 'Left'],
+      corners = ['Top', 'Right', 'Bottom', 'Left'],
       backgroundProperties = [
         'Attachment', 'Color', 'Image', 'Repeat',
         'Position', 'Size', 'Clip', 'Origin'
@@ -124,9 +124,9 @@
      * Adjust rectangle
      */
     adjustRectangle: function() {
-      var edge,
+      var corner,
           i = 0,
-          length = edges.length,
+          length = corners.length,
           offset = this.$el.position(),
           copiedStyles = {
             top: offset.top,
@@ -136,9 +136,9 @@
           };
 
       for (; i < length; i++) {
-        edge = edges[i];
-        copiedStyles['margin' + edge] = this.$el.css('margin' + edge);
-        copiedStyles['border' + edge] = this.$el.css('border' + edge);
+        corner = corners[i];
+        copiedStyles['margin' + corner] = this.$el.css('margin' + corner);
+        copiedStyles['border' + corner] = this.$el.css('border' + corner);
       }
 
       this.$bg.css(copiedStyles);
