@@ -1,5 +1,5 @@
 describe('jQuery.BgSwitcher.ImageList', function() {
-  const IMAGES = [
+  var IMAGES = [
     '../demo/images/image_1.jpg',
     '../demo/images/image_2.jpg',
     '../demo/images/image_3.jpg',
@@ -7,7 +7,7 @@ describe('jQuery.BgSwitcher.ImageList', function() {
     '../demo/images/image_5.jpg'
   ];
 
-  const SEQUENCEABLE_IMAGES = ['../demo/images/image_.jpg', 1, 5];
+  var SEQUENCEABLE_IMAGES = ['../demo/images/image_.jpg', 1, 5];
 
   var il;
 

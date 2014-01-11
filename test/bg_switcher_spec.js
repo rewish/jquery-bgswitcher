@@ -1,5 +1,5 @@
 describe('jQuery.BgSwitcher', function() {
-  const INTERVAL = 10000;
+  var INTERVAL = 10000;
 
   var bs;
   var el = document.getElementById('sandbox');

@@ -332,6 +332,13 @@
         copiedStyle[prop] = this.$el.css(prop);
       }
 
+      // For IE<=9
+      if (copiedStyle.backgroundPosition === undefined) {
+        delete copiedStyle.backgroundPosition;
+        copiedStyle.backgroundPositionX = this.$el.css('backgroundPositionX');
+        copiedStyle.backgroundPositionY = this.$el.css('backgroundPositionY');
+      }
+
       this.$bg.css(copiedStyle);
     },
 
