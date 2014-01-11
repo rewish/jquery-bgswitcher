@@ -324,8 +324,9 @@
     _copyBackgroundStyles: function () {
       var prop,
           copiedStyle = {},
+          i = 0,
           length = backgroundProperties.length,
-          i = 0;
+          backgroundPosition = 'backgroundPosition';
 
       for (; i < length; i++) {
         prop = 'background' + backgroundProperties[i];
@@ -333,10 +334,11 @@
       }
 
       // For IE<=9
-      if (copiedStyle.backgroundPosition === undefined) {
-        delete copiedStyle.backgroundPosition;
-        copiedStyle.backgroundPositionX = this.$el.css('backgroundPositionX');
-        copiedStyle.backgroundPositionY = this.$el.css('backgroundPositionY');
+      if (copiedStyle[backgroundPosition] === undefined) {
+        copiedStyle[backgroundPosition] = [
+          this.$el.css(backgroundPosition + 'X'),
+          this.$el.css(backgroundPosition + 'Y')
+        ].join(' ');
       }
 
       this.$bg.css(copiedStyle);

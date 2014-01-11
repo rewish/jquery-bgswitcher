@@ -122,10 +122,6 @@ describe('jQuery.BgSwitcher', function() {
     });
   });
 
-  describe('#_adjustRectangle', function() {
-    it('adjust the $bg rectangle from the $el rectangle');
-  });
-
   describe('#start', function() {
     beforeEach(function() {
       bs.setConfig({
@@ -344,7 +340,19 @@ describe('jQuery.BgSwitcher', function() {
     });
   });
 
-  describe('defineEffect', function() {
+  describe('#_adjustRectangle', function() {
+    it('adjust the $bg rectangle from the $el rectangle');
+  });
+
+  describe('#_copyBackgroundStyles', function() {
+    it('copy background-position or background-position-(x|y)', function() {
+      bs.$el.css('backgroundPosition', '123px 456px');
+      bs._copyBackgroundStyles();
+      expect(bs.$bg.attr('style')).match(/123px 456px/);
+    });
+  });
+
+  describe('.defineEffect', function() {
     it('should be set a function', function() {
       var fn = function() {};
       $.BgSwitcher.defineEffect('foo', fn);
