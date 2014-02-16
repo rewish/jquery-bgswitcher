@@ -1,5 +1,5 @@
 describe('jQuery.BgSwitcher', function() {
-  const INTERVAL = 10000;
+  var INTERVAL = 10000;
 
   var bs;
   var el = document.getElementById('sandbox');
@@ -33,9 +33,9 @@ describe('jQuery.BgSwitcher', function() {
     });
 
     it('listen to the resize event of window', function() {
-      bs.adjustRectangle = sinon.spy();
+      bs._adjustRectangle = sinon.spy();
       $(window).trigger('resize');
-      expect(bs.adjustRectangle.calledOnce).to.be.ok();
+      expect(bs._adjustRectangle.calledOnce).to.be.ok();
     });
   });
 
@@ -84,13 +84,13 @@ describe('jQuery.BgSwitcher', function() {
       });
     });
 
-    it('should be call #_prepare', function() {
-      bs._prepare = sinon.spy();
+    it('should be call #refresh', function() {
+      bs.refresh = sinon.spy();
       bs.setConfig();
-      expect(bs._prepare.calledOnce).to.be.ok();
+      expect(bs.refresh.calledOnce).to.be.ok();
     });
 
-    // Describe a more specs in #_prepare
+    // Describe a more specs in #refresh
   });
 
   describe('#setImages', function() {
@@ -120,10 +120,6 @@ describe('jQuery.BgSwitcher', function() {
         expect(bs.getBuiltInSwitchHandler('drop')).to.be(bs.constructor.switchHandlers.drop);
       });
     });
-  });
-
-  describe('#adjustRectangle', function() {
-    it('adjust the $bg rectangle from the $el rectangle');
   });
 
   describe('#start', function() {
@@ -302,7 +298,7 @@ describe('jQuery.BgSwitcher', function() {
     });
   });
 
-  describe('#_prepare', function() {
+  describe('#refresh', function() {
     beforeEach(function() {
       bs.config = {
         images: [],
@@ -313,14 +309,14 @@ describe('jQuery.BgSwitcher', function() {
     it('call #setImages with config.images', function() {
       bs.setImages([]); // Avoid an errors
       bs.setImages = sinon.spy();
-      bs._prepare();
+      bs.refresh();
       expect(bs.setImages.calledOnce).to.be.ok();
       expect(bs.setImages.calledWith(bs.config.images)).to.be.ok();
     });
 
     it('call #setSwitchHandler with built-in switch handler', function() {
       bs.setSwitchHandler = sinon.spy();
-      bs._prepare();
+      bs.refresh();
       expect(bs.setSwitchHandler.calledOnce).to.be.ok();
       expect(bs.setSwitchHandler.calledWith(bs.constructor.switchHandlers.clip)).to.be.ok();
     });
@@ -329,7 +325,7 @@ describe('jQuery.BgSwitcher', function() {
       it('should be call #start', function() {
         bs.config.start = true;
         bs.start = sinon.spy();
-        bs._prepare();
+        bs.refresh();
         expect(bs.start.calledOnce).to.be.ok();
       });
     });
@@ -338,13 +334,25 @@ describe('jQuery.BgSwitcher', function() {
       it('should be not call #start', function() {
         bs.config.start = false;
         bs.start = sinon.spy();
-        bs._prepare();
+        bs.refresh();
         expect(bs.start.calledOnce).to.not.be.ok();
       });
     });
   });
 
-  describe('defineEffect', function() {
+  describe('#_adjustRectangle', function() {
+    it('adjust the $bg rectangle from the $el rectangle');
+  });
+
+  describe('#_copyBackgroundStyles', function() {
+    it('copy background-position or background-position-(x|y)', function() {
+      bs.$el.css('backgroundPosition', '123px 456px');
+      bs._copyBackgroundStyles();
+      expect(bs.$bg.attr('style')).match(/123px 456px/);
+    });
+  });
+
+  describe('.defineEffect', function() {
     it('should be set a function', function() {
       var fn = function() {};
       $.BgSwitcher.defineEffect('foo', fn);

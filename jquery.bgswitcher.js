@@ -1,7 +1,7 @@
 /*!
  * jQuery.BgSwitcher
  *
- * @version  0.4.2
+ * @version  0.4.3
  * @author   rewish <rewish.org@gmail.com>
  * @license  MIT License (https://github.com/rewish/jquery-bgswitcher/blob/master/LICENSE.md)
  * @link     https://github.com/rewish/jquery-bgswitcher
@@ -14,7 +14,7 @@
       slice = Array.prototype.slice,
       toString = Object.prototype.toString,
 
-      edges = ['Top', 'Right', 'Bottom', 'Left'],
+      corners = ['Top', 'Right', 'Bottom', 'Left'],
       backgroundProperties = [
         'Attachment', 'Color', 'Image', 'Repeat',
         'Position', 'Size', 'Clip', 'Origin'
@@ -85,7 +85,7 @@
         this.config.shuffle = this.config.random;
       }
 
-      this._prepare();
+      this.refresh();
     },
 
     /**
@@ -121,27 +121,16 @@
     },
 
     /**
-     * Adjust rectangle
+     * Refresh
      */
-    adjustRectangle: function() {
-      var edge,
-          i = 0,
-          length = edges.length,
-          offset = this.$el.position(),
-          copiedStyles = {
-            top: offset.top,
-            left: offset.left,
-            width: this.$el.innerWidth(),
-            height: this.$el.innerHeight()
-          };
+    refresh: function() {
+      this.setImages(this.config.images);
+      this.setSwitchHandler(this.getBuiltInSwitchHandler());
+      this._prepareSwitching();
 
-      for (; i < length; i++) {
-        edge = edges[i];
-        copiedStyles['margin' + edge] = this.$el.css('margin' + edge);
-        copiedStyles['border' + edge] = this.$el.css('border' + edge);
+      if (this.config.start) {
+        this.start();
       }
-
-      this.$bg.css(copiedStyles);
     },
 
     /**
@@ -271,16 +260,27 @@
     },
 
     /**
-     * Prepare
+     * Adjust rectangle
      */
-    _prepare: function() {
-      this.setImages(this.config.images);
-      this.setSwitchHandler(this.getBuiltInSwitchHandler());
-      this._prepareSwitching();
+    _adjustRectangle: function() {
+      var corner,
+          i = 0,
+          length = corners.length,
+          offset = this.$el.position(),
+          copiedStyles = {
+            top: offset.top,
+            left: offset.left,
+            width: this.$el.innerWidth(),
+            height: this.$el.innerHeight()
+          };
 
-      if (this.config.start) {
-        this.start();
+      for (; i < length; i++) {
+        corner = corners[i];
+        copiedStyles['margin' + corner] = this.$el.css('margin' + corner);
+        copiedStyles['border' + corner] = this.$el.css('border' + corner);
       }
+
+      this.$bg.css(copiedStyles);
     },
 
     /**
@@ -295,7 +295,7 @@
       });
 
       this._copyBackgroundStyles();
-      this.adjustRectangle();
+      this._adjustRectangle();
 
       if (this.$el[0].tagName === 'BODY') {
         this.$el.prepend(this.$bg);
@@ -324,12 +324,21 @@
     _copyBackgroundStyles: function () {
       var prop,
           copiedStyle = {},
+          i = 0,
           length = backgroundProperties.length,
-          i = 0;
+          backgroundPosition = 'backgroundPosition';
 
       for (; i < length; i++) {
         prop = 'background' + backgroundProperties[i];
         copiedStyle[prop] = this.$el.css(prop);
+      }
+
+      // For IE<=9
+      if (copiedStyle[backgroundPosition] === undefined) {
+        copiedStyle[backgroundPosition] = [
+          this.$el.css(backgroundPosition + 'X'),
+          this.$el.css(backgroundPosition + 'Y')
+        ].join(' ');
       }
 
       this.$bg.css(copiedStyle);
@@ -341,7 +350,7 @@
     _listenToResize: function() {
       var that = this;
       this._resizeHandler = function() {
-        that.adjustRectangle();
+        that._adjustRectangle();
       };
       $(window).on('resize', this._resizeHandler);
     },
@@ -355,7 +364,7 @@
     },
 
     /**
-     * Prepare to switching the background image
+     * Prepare the Switching
      */
     _prepareSwitching: function() {
       this.$bg.css('backgroundImage', this.imageList.url(this.index));
