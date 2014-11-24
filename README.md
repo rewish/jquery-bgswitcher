@@ -65,7 +65,7 @@ First, define effect with using the `$.BgSwitcher.defineEffect()`.
 
 ```js
 $.BgSwitcher.defineEffect("extraSlide", function($el) {
-  $el.animate({right: -$el.width()}, this.config.duration, this.config.easing);
+  $el.animate({left: $el.width()}, this.config.duration, this.config.easing);
 });
 ```
 
