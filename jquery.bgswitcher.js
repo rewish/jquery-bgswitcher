@@ -204,6 +204,19 @@
     },
 
     /**
+     * Go to random switching
+     */
+    random: function() {
+      var index;
+      do {
+        index = Math.floor(Math.random() * this.imageList.count())
+      } while (this.index === index);
+
+      this.index = index;
+      this.switching();
+    },
+
+    /**
      * Select the switching at index
      *
      * @param {number} index
