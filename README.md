@@ -98,6 +98,7 @@ reset   | Return to the first switching
 select  | Select the switching at index
 next    | Go to the next switching
 prev    | Go to the previous switching
+random  | Go to the random switching
 destroy | !!Destroy BgSwitcher!!
 
 Example for `select` with button:

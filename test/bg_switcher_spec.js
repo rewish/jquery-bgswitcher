@@ -247,6 +247,22 @@ describe('jQuery.BgSwitcher', function() {
     });
   });
 
+  describe('#random', function() {
+    beforeEach(function() {
+      bs.setConfig({images: ['foo', 'bar', 'baz']});
+    });
+
+    it('go to random switching', function() {
+      bs.select(0);
+      expect(bs.$bg.css('backgroundImage').split('/').pop()).to.have.contain('foo');
+      bs.random();
+      var randomImage = bs.$bg.css('backgroundImage').split('/').pop()
+      expect(randomImage).not.to.have.contain('foo');
+      bs.random();
+      expect(bs.$bg.css('backgroundImage').split('/').pop()).not.to.have.contain(randomImage);
+    });
+  });
+
   describe('#select', function() {
     beforeEach(function() {
       bs.setConfig({images: ['foo', 'bar', 'baz']});
