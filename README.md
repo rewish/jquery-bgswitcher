@@ -96,6 +96,7 @@ stop    | Stop the switching
 toggle  | Toggle between start/stop
 reset   | Return to the first switching
 select  | Select the switching at index
+current | Return current index
 next    | Go to the next switching
 prev    | Go to the previous switching
 destroy | !!Destroy BgSwitcher!!

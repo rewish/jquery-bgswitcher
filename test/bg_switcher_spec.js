@@ -267,6 +267,19 @@ describe('jQuery.BgSwitcher', function() {
     });
   });
 
+  describe('#current', function() {
+    beforeEach(function() {
+      bs.setConfig({images: ['foo', 'bar', 'baz']});
+    });
+
+    it('return current index', function() {
+      bs.select(2);
+      expect(bs.current()).to.be(2);
+      bs.prev();
+      expect(bs.current()).to.be(1);
+    });
+  });
+
   describe('#switching', function() {
     beforeEach(function() {
       bs.setConfig({interval: INTERVAL});
