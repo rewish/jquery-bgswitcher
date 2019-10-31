@@ -218,6 +218,13 @@
     },
 
     /**
+     * Return current index
+     */
+    current: function() {
+      return this.index
+    },
+
+    /**
      * Switching the background image
      */
     switching: function() {
